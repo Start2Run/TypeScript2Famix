@@ -1,0 +1,19 @@
+{
+  "name": "typescript2famix",
+  "version": "1.0.0",
+  "description": "",
+  "main": "typeScript2famix-MSEDocuments.js",
+  "scripts": {
+    "start": "node ./src/typeScript2famix-MSEDocuments.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^14.14.22",
+    "ts-morph": "^9.1.0"
+  },
+  "dependencies": {
+    "@ts-morph/bootstrap": "^0.8.0"
+  }
+}

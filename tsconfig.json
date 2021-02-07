@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "module": "commonjs",
+        "target": "es5",
+        "rootDir": "src",
+        "sourceMap": true,
+        "outDir": "out",
+        "lib": ["esnext", "dom"],
+        "downlevelIteration": true,
+        "resolveJsonModule": true
+    },
+    "include": ["src/**/*", "src/lib/**/*.ts"],
+    "exclude": ["node_modules", "resources/**/*.ts"]
+}
