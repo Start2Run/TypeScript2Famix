@@ -1,7 +1,6 @@
 import * as MSEDocument from "./lib/MSEDocument";
 import * as fs from "fs";
 import { Project } from "ts-morph";
-import { stringify } from "querystring";
 
 const elementNamePrefix = "Famix-TypeScript-Entities.";
 const classType = "Class";
