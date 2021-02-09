@@ -8,7 +8,6 @@ import {FamixMseExporter} from "./lib/famix_mse_exporter";
 import { FamixRepository } from './lib/famix_repository';
 
 import * as fs from 'fs';
-import { clearScreenDown } from "readline";
 
 try
 {
