@@ -2,9 +2,9 @@
   "name": "typescript2famix",
   "version": "1.0.0",
   "description": "",
-  "main": "typeScript2famix-MSEDocuments.js",
+  "main": "sample.js",
   "scripts": {
-    "start": "node ./src/typeScript2famix-MSEDocuments.ts"
+    "start": "node ./src/sample.ts"
   },
   "keywords": [],
   "author": "",

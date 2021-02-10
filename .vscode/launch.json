@@ -17,7 +17,7 @@
             "skipFiles": [
                 "${workspaceFolder}/resources/*.ts"
             ],
-            "program": "${workspaceFolder}\\src\\typeScript2famix-MSEDocuments.ts",
+            "program": "${workspaceFolder}\\src\\sample.ts",
             "outFiles": [
                 "${workspaceFolder}/**/*.js"
             ]
