@@ -1,8 +1,9 @@
-import { ClassDeclaration, ImplementationLocation, MethodDeclaration, MethodSignature, Project, PropertyDeclaration, PropertySignature, ts } from "ts-morph";
+import { Project } from "ts-morph";
 const project = new Project();
 
 import * as Famix from "./lib/model/famix";
 import { FamixRepository } from './lib/famix_repository';
+import './FmxClassExternsions'
 
 import * as fs from 'fs';
 
@@ -32,11 +33,13 @@ try {
             }
             namespaces.set(name, fmxNamespace);
             namespace.getClasses().forEach(cls => {
-                createFamixClass(cls.getName(), fmxNamespace, fmxFileAnchor, false);
+                var fmxClass = new Famix.Class(fmxRep).UpdateInfo(cls.getName(), fmxNamespace, fmxFileAnchor, false);
+                fmxRep.addElement(fmxClass);
             });
 
             namespace.getInterfaces().forEach(interf => {
-                createFamixClass(interf.getName(), fmxNamespace, fmxFileAnchor, false);
+                var fmxClass = new Famix.Class(fmxRep).UpdateInfo(interf.getName(), fmxNamespace, fmxFileAnchor, true);
+                fmxRep.addElement(fmxClass);
             });
         }
     });
@@ -45,16 +48,16 @@ try {
         file.getNamespaces().forEach(namespace => {
             namespace.getClasses().forEach(cls => {
                 var fmxClass = fmxRep.getFamixClass(cls.getName());
-                addClassMethods(cls.getMethods(), fmxClass);
-                addClassProperties(cls.getProperties(), fmxClass);
-                addDerivedClasses(cls.getDerivedClasses(), fmxClass);
+                fmxClass.AddMethods(cls.getMethods(), fmxRep);
+                fmxClass.AddProperties(cls.getProperties(), fmxRep);
+                fmxClass.AddDerivedClasses(cls.getDerivedClasses(), fmxRep);
             });
 
             namespace.getInterfaces().forEach(interf => {
                 var fmxClass = fmxRep.getFamixClass(interf.getName());
-                addInterfaceMethods(interf.getMethods(), fmxClass);
-                addInterfaceProperties(interf.getProperties(), fmxClass);
-                addInterfaceImplementations(interf.getImplementations(),fmxClass)
+                fmxClass.AddMethods(interf.getMethods(), fmxRep);
+                fmxClass.AddProperties(interf.getProperties(), fmxRep);
+                fmxClass.AddInterfaceImplementations(interf.getImplementations(), fmxRep)
             });
         })
     });
@@ -65,65 +68,4 @@ try {
 }
 catch (Error) {
     console.log(Error.message);
-}
-
-function createFamixClass(name: string, fmxNamespace: Famix.Namespace, fmxFileAnchor: Famix.FileAnchor, isInterface: boolean) {
-    var fmxClass = new Famix.Class(fmxRep);
-    var fileName = name;
-    fmxClass.setName(fileName);
-    fmxClass.setIsInterface(isInterface);
-    fmxRep.addElement(fmxClass);
-    fmxClass.setContainer(fmxNamespace);
-    fmxFileAnchor.setElement(fmxClass);
-}
-
-function addClassMethods(methods: MethodDeclaration[], fmxClass: Famix.Class) {
-    methods.forEach(method => {
-        var fmxMethod = new Famix.Method(fmxRep);
-        fmxMethod.setName(method.getName())
-        fmxMethod.setParentType(fmxClass);
-        fmxMethod.setNumberOfLinesOfCode(method.getEndLineNumber() - method.getStartLineNumber());
-    });
-}
-
-function addInterfaceMethods(methods: MethodSignature[], fmxClass: Famix.Class) {
-    methods.forEach(method => {
-        var fmxMethod = new Famix.Method(fmxRep);
-        fmxMethod.setName(method.getName())
-        fmxMethod.setParentType(fmxClass);
-    });
-}
-
-function addClassProperties(props: PropertyDeclaration[], fmxClass: Famix.Class) {
-    props.forEach(prop => {
-        var fmxAttribute = new Famix.Attribute(fmxRep);
-        fmxAttribute.setName(prop.getName());
-        fmxAttribute.setParentType(fmxClass);
-    });
-}
-
-function addInterfaceProperties(props: PropertySignature[], fmxClass: Famix.Class) {
-    props.forEach(prop => {
-        var fmxAttribute = new Famix.Attribute(fmxRep);
-        fmxAttribute.setName(prop.getName());
-        fmxAttribute.setParentType(fmxClass);
-    });
-}
-
-function addDerivedClasses(derivedClasses: ClassDeclaration[], fmxClass: Famix.Class) {
-    derivedClasses.forEach(derivedClass => {
-        var fmxInheritance = new Famix.Inheritance(fmxRep);
-        var subclass = fmxRep.getFamixClass(derivedClass.getName());
-        fmxInheritance.setSubclass(subclass);
-        fmxInheritance.setSuperclass(fmxClass);
-    });
-}
-
-function addInterfaceImplementations(implementations: ImplementationLocation[], fmxClass: Famix.Class) {
-    implementations.forEach(implementation => {
-        var fmxInheritance = new Famix.Inheritance(fmxRep);
-        var subclass = fmxRep.getFamixClass(implementation.getNode().getText());
-        fmxInheritance.setSubclass(subclass);
-        fmxInheritance.setSuperclass(fmxClass);
-    });
 }

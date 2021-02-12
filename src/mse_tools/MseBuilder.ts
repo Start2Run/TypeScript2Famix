@@ -1,4 +1,4 @@
-import * as MSEDocument from "./lib/MSEDocument";
+import * as MSEDocument from "../lib/MSEDocument";
 import { MseClass } from "./MseClass";
 import { MseMethod } from "./MseMethod";
 
