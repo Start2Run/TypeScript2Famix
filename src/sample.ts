@@ -7,17 +7,23 @@ import './FmxClassExternsions'
 
 import * as fs from 'fs';
 
+if (process.argv.length != 3) {
+    process.exit(-1);
+}
+
+var folderPath = process.argv[2];
+
 try {
-    const sourceFiles = project.addSourceFilesAtPaths("**/resources/*.ts");
+    const sourceFiles = project.addSourceFilesAtPaths(folderPath + "/*.ts");
 
     var fmxRep = new FamixRepository();
 
     let namespaces = new Map<string, Famix.Namespace>();
     sourceFiles.forEach(file => {
-        var fmxFileAnchor = new Famix.FileAnchor(fmxRep);
-        fmxFileAnchor.setFileName(file.getBaseName())
-        fmxFileAnchor.setStartLine(file.getStartLineNumber())
-        fmxFileAnchor.setEndLine(file.getEndLineNumber())
+        var fmxFileAnchor = new Famix.IndexedFileAnchor(fmxRep);
+        fmxFileAnchor.setFileName(file.getFilePath())
+        fmxFileAnchor.setStartPos(file.getStartLineNumber())
+        fmxFileAnchor.setEndPos(file.getEndLineNumber())
 
         if (file.getNamespaces().length > 0) {
             var namespace = file.getNamespaces()[0];

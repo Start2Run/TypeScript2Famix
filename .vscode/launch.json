@@ -11,6 +11,7 @@
             "sourceMaps": true,
             "stopOnEntry": false,
             "preLaunchTask": "tsc: build - tsconfig.json",
+            "args": ["D:/Repos/MGL843/resources"],
             "runtimeArgs": [
                 "--nolazy"
             ],

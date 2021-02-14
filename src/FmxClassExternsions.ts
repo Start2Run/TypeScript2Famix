@@ -5,7 +5,7 @@ import { ClassDeclaration, ImplementationLocation, MethodDeclaration } from "ts-
 
 declare module './lib/model/famix/class' {
     interface Class {
-        UpdateInfo(name: string, fmxNamespace: Famix.Namespace, fmxFileAnchor: Famix.FileAnchor, isInterface: boolean): Class;
+        UpdateInfo(name: string, fmxNamespace: Famix.Namespace, fmxFileAnchor: Famix.IndexedFileAnchor, isInterface: boolean): Class;
         AddMethods(methods: any[], famixRepository: FamixRepository);
         AddDerivedClasses(derivedClasses: ClassDeclaration[], famixRepository: FamixRepository);
         AddProperties(props: any[], famixRepository: FamixRepository);
@@ -13,7 +13,7 @@ declare module './lib/model/famix/class' {
     }
 }
 
-Class.prototype.UpdateInfo = function (name: string, fmxNamespace: Famix.Namespace, fmxFileAnchor: Famix.FileAnchor, isInterface: boolean) {
+Class.prototype.UpdateInfo = function (name: string, fmxNamespace: Famix.Namespace, fmxFileAnchor: Famix.IndexedFileAnchor, isInterface: boolean) {
     this.setName(name);
     this.setIsInterface(isInterface);
     this.setContainer(fmxNamespace);
