@@ -5,7 +5,7 @@ import { ClassDeclaration, ImplementationLocation, MethodDeclaration } from "ts-
 
 declare module './lib/model/famix/class' {
     interface Class {
-        UpdateInfo(name: string, fmxNamespace: Famix.Namespace, fmxFileAnchor: Famix.IndexedFileAnchor, isInterface: boolean): Class;
+        UpdateInfo(name: string, fmxFileAnchor: Famix.IndexedFileAnchor, isInterface: boolean, fmxNamespace?: Famix.Namespace): Class;
         AddMethods(methods: any[], famixRepository: FamixRepository);
         AddDerivedClasses(derivedClasses: ClassDeclaration[], famixRepository: FamixRepository);
         AddProperties(props: any[], famixRepository: FamixRepository);
@@ -13,10 +13,12 @@ declare module './lib/model/famix/class' {
     }
 }
 
-Class.prototype.UpdateInfo = function (name: string, fmxNamespace: Famix.Namespace, fmxFileAnchor: Famix.IndexedFileAnchor, isInterface: boolean) {
+Class.prototype.UpdateInfo = function (name: string, fmxFileAnchor: Famix.IndexedFileAnchor, isInterface: boolean, fmxNamespace?: Famix.Namespace) {
     this.setName(name);
     this.setIsInterface(isInterface);
-    this.setContainer(fmxNamespace);
+    if (fmxNamespace != null) {
+        this.setContainer(fmxNamespace);
+    }
     fmxFileAnchor.setElement(this);
     return this;
 }
@@ -25,8 +27,19 @@ Class.prototype.AddMethods = function (methods: MethodDeclaration[], famixReposi
     methods.forEach(method => {
         var fmxMethod = new Famix.Method(famixRepository);
         fmxMethod.setName(method.getName())
+        fmxMethod.setKind(method.getKindName())
+        var fmxFileAnchor = new Famix.IndexedFileAnchor(famixRepository);
+        fmxFileAnchor.setStartPos(method.getStartLineNumber())
+        fmxFileAnchor.setEndPos(method.getEndLineNumber())
+        fmxFileAnchor.setElement(fmxMethod);
+        
+        fmxFileAnchor.setFileName(((this as Famix.Class).getSourceAnchor() as Famix.IndexedFileAnchor).getFileName());
         fmxMethod.setParentType(this);
         fmxMethod.setNumberOfLinesOfCode(method.getEndLineNumber() - method.getStartLineNumber());
+
+        if (!(this as Famix.Class).getIsInterface()) {
+            fmxMethod.addModifiers(method.getScope());
+        }
     });
 }
 

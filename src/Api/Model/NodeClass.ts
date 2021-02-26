@@ -2,13 +2,10 @@
  * Cette classe permet de donner la structure d'une classe concrete
  */
 import { ClassDeclaration, ClassElement, HeritageClause, Project, SourceFile, Type, TypeFlags } from "ts-morph";
-import * as _ from "lodash";
 import { Link } from "./Link";
 import { EXTENDS, IMPLEMENTS, CLASS, INTERFACE } from "./Keyword";
-import { link } from "fs";
 import { Parameter } from "./Parameter";
 import { Method } from "./Method";
-import { SIGABRT } from "constants";
 
 export class NodeClass {
     protected classDeclaration: ClassDeclaration;
@@ -20,7 +17,7 @@ export class NodeClass {
     // Permet de determiner si une autre classe a un lien (heritage ou implementation) 
     // d'une autre classe
     hasLink(): boolean {
-        return !_.isEmpty(this.getHeritageClauses());
+        return true;//!_.isEmpty(this.getHeritageClauses());
 
     }
 
