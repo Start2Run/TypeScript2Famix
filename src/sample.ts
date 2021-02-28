@@ -1,11 +1,11 @@
 import { Project } from "ts-morph";
 const project = new Project();
 
-import * as Famix from "./lib/model/famix";
 import { FamixRepository } from './lib/famix_repository';
 import './FmxClassExternsions'
 
 import * as fs from 'fs';
+import { Helper } from "./helper";
 
 if (process.argv.length != 3) {
     process.exit(-1);
@@ -18,54 +18,43 @@ try {
 
     var fmxRep = new FamixRepository();
 
-    let namespaces = new Map<string, Famix.Namespace>();
+    let helper = new Helper(fmxRep);
+
     sourceFiles.forEach(file => {
-        var fmxFileAnchor = new Famix.IndexedFileAnchor(fmxRep);
-        fmxFileAnchor.setFileName(file.getFilePath())
-        fmxFileAnchor.setStartPos(file.getStartLineNumber())
-        fmxFileAnchor.setEndPos(file.getEndLineNumber())
+        var fmxFileAnchor = helper.loadFileAnchors(file);
 
-        if (file.getNamespaces().length > 0) {
-            var namespace = file.getNamespaces()[0];
-            var name = namespace.getName();
+        // Load classes and interfaces without namespace
+        file.getClasses().forEach(cls => {
+            helper.loadClass(cls, fmxFileAnchor);
+        });
+        file.getInterfaces().forEach(interf => {
+            helper.loadInterface(interf, fmxFileAnchor);
+        });
 
-            let fmxNamespace: Famix.Namespace;
-            if (namespaces.has(name)) {
-                fmxNamespace = namespaces.get(name);
-            }
-            else {
-                fmxNamespace = new Famix.Namespace(fmxRep);
-                fmxNamespace.setName(name);
-            }
-            namespaces.set(name, fmxNamespace);
+        file.getNamespaces().forEach(namespace => {
+            helper.loadNamespace(namespace)
+
+            // Load classes and interfaces inside a namespace
             namespace.getClasses().forEach(cls => {
-                var fmxClass = new Famix.Class(fmxRep).UpdateInfo(cls.getName(), fmxNamespace, fmxFileAnchor, false);
-                fmxRep.addElement(fmxClass);
+                helper.loadClass(cls, fmxFileAnchor);
             });
-
             namespace.getInterfaces().forEach(interf => {
-                var fmxClass = new Famix.Class(fmxRep).UpdateInfo(interf.getName(), fmxNamespace, fmxFileAnchor, true);
-                fmxRep.addElement(fmxClass);
+                helper.loadInterface(interf, fmxFileAnchor);
             });
-        }
+        });
+    });
+    helper.classes.forEach(cls => {
+        var fmxClass = fmxRep.getFamixClass(cls.getName());
+        fmxClass.AddMethods(cls.getMethods(), fmxRep);
+        fmxClass.AddProperties(cls.getProperties(), fmxRep);
+        fmxClass.AddDerivedClasses(cls.getDerivedClasses(), fmxRep);
     });
 
-    sourceFiles.forEach(file => {
-        file.getNamespaces().forEach(namespace => {
-            namespace.getClasses().forEach(cls => {
-                var fmxClass = fmxRep.getFamixClass(cls.getName());
-                fmxClass.AddMethods(cls.getMethods(), fmxRep);
-                fmxClass.AddProperties(cls.getProperties(), fmxRep);
-                fmxClass.AddDerivedClasses(cls.getDerivedClasses(), fmxRep);
-            });
-
-            namespace.getInterfaces().forEach(interf => {
-                var fmxClass = fmxRep.getFamixClass(interf.getName());
-                fmxClass.AddMethods(interf.getMethods(), fmxRep);
-                fmxClass.AddProperties(interf.getProperties(), fmxRep);
-                fmxClass.AddInterfaceImplementations(interf.getImplementations(), fmxRep)
-            });
-        })
+    helper.interfaces.forEach(interf => {
+        var fmxClass = fmxRep.getFamixClass(interf.getName());
+        fmxClass.AddMethods(interf.getMethods(), fmxRep);
+        fmxClass.AddProperties(interf.getProperties(), fmxRep);
+        fmxClass.AddInterfaceImplementations(interf.getImplementations(), fmxRep)
     });
 
     var mse = fmxRep.getMSE();
