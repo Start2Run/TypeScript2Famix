@@ -1,6 +1,6 @@
-import {FamixBaseElement} from "./famix_base_element";
-import {Class} from "./model/famix";
-import {CustomSourceLanguage} from "./model/famix";
+import { FamixBaseElement } from './famix_base_element';
+import { Class, Package } from './model/famix';
+import { CustomSourceLanguage } from './model/famix';
 
 export class FamixRepository {
   private elements: Set<FamixBaseElement> = new Set<FamixBaseElement>();
@@ -8,10 +8,11 @@ export class FamixRepository {
   private idCounter: number = 1;
   private lang: CustomSourceLanguage;
   private static repo: FamixRepository;
+  private famixPackages: Set<Package> = new Set<Package>();
 
   constructor() {
     this.lang = new CustomSourceLanguage(this);
-    this.lang.setName("ABAP");
+    this.lang.setName('ABAP');
   }
 
   public static getFamixRepo(): FamixRepository {
@@ -22,7 +23,7 @@ export class FamixRepository {
   }
 
   public static clearFamixRepo() {
-      this.repo = new FamixRepository();
+    this.repo = new FamixRepository();
   }
 
   public createOrGetFamixClass(name: string, isInterface?: boolean): Class {
@@ -31,17 +32,35 @@ export class FamixRepository {
       newClass = new Class(this);
       newClass.setName(name.toLowerCase());
       newClass.setIsStub(true);
-      if ((isInterface !== undefined) && (isInterface)) {
+      if (isInterface !== undefined && isInterface) {
         newClass.setIsInterface(true);
       }
     }
     return newClass;
   }
 
+  public createOrGetFamixPackage(name: string): Package {
+    let newPackage = this.getFamixPackage(name);
+    if (newPackage === undefined) {
+      newPackage = new Package(this);
+      newPackage.setName(name.toLowerCase());
+    }
+    return newPackage;
+  }
+
   public getFamixClass(name: string): Class | undefined {
     for (const fc of this.famixClasses) {
       if (fc.getName().toLowerCase() === name.toLowerCase()) {
         return fc;
+      }
+    }
+    return undefined;
+  }
+
+  public getFamixPackage(name: string): Package | undefined {
+    for (const fp of this.famixPackages) {
+      if (fp.getName().toLowerCase() === name.toLowerCase()) {
+        return fp;
       }
     }
     return undefined;
@@ -58,13 +77,13 @@ export class FamixRepository {
   }
 
   public getMSE(): string {
-    let ret: string = "(";
+    let ret: string = '(';
     for (const element of this.famixClasses) {
       ret = ret + element.getMSE();
     }
     for (const element of this.elements) {
       ret = ret + element.getMSE();
     }
-    return ret + ")";
+    return ret + ')';
   }
 }
