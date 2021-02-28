@@ -11,9 +11,9 @@ export class TsInterface {
   ) {
     var fmxClass = new Famix.Class(famixRepo).UpdateInfo(
       tsInterface.getName(),
-      namespace,
       fileAnchor,
-      true
+      true,
+      namespace
     );
     famixRepo.addElement(fmxClass);
   }

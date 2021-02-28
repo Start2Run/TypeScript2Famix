@@ -12,10 +12,10 @@ import { TsMethod } from './generatorTools/ts-method';
 declare module './lib/model/famix/class' {
   interface Class {
     UpdateInfo(
-      name: string,
-      fmxNamespace: Famix.Namespace,
+      name: string,      
       fmxFileAnchor: Famix.IndexedFileAnchor,
-      isInterface: boolean
+      isInterface: boolean,
+	  fmxNamespace?: Famix.Namespace
     ): Class;
     AddMethods(methods: any[], famixRepository: FamixRepository);
     AddMethodsWithReturnTypes(methods: any[], famixRepository: FamixRepository);
