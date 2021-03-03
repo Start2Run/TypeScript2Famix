@@ -32,14 +32,14 @@ try {
         });
 
         file.getNamespaces().forEach(namespace => {
-            helper.loadNamespace(namespace)
+            var fmxNamespace =helper.loadNamespace(namespace);
 
             // Load classes and interfaces inside a namespace
             namespace.getClasses().forEach(cls => {
-                helper.loadClass(cls, fmxFileAnchor);
+                helper.loadClass(cls, fmxFileAnchor, fmxNamespace);
             });
             namespace.getInterfaces().forEach(interf => {
-                helper.loadInterface(interf, fmxFileAnchor);
+                helper.loadInterface(interf, fmxFileAnchor, fmxNamespace);
             });
         });
     });

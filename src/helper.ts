@@ -21,7 +21,7 @@ export class Helper {
         return fmxFileAnchor;
     }
 
-    public loadNamespace(namespaceDeclaration: NamespaceDeclaration){
+    public loadNamespace(namespaceDeclaration: NamespaceDeclaration): Famix.Namespace {
         var name = namespaceDeclaration.getName();
         let fmxNamespace: Famix.Namespace;
         if (this._namespaces.has(name)) {
@@ -32,20 +32,28 @@ export class Helper {
             fmxNamespace.setName(name);
         }
         this._namespaces.set(name, fmxNamespace);
+        return fmxNamespace;
     }
 
-    public loadClass(classDeclaration: ClassDeclaration, fmxFileAnchor: Famix.IndexedFileAnchor) {
+    public loadClass(classDeclaration: ClassDeclaration, fmxFileAnchor: Famix.IndexedFileAnchor, fmxNameSpace: Famix.Namespace = null) {
         this.classes.push(classDeclaration);
-        this.getFamiClass(classDeclaration.getName(), fmxFileAnchor, false);;
+        var fmxClass = this.getFamiClass(classDeclaration.getName(), fmxFileAnchor, false);
+        if (fmxNameSpace != null) {
+            fmxClass.setContainer(fmxNameSpace);
+        }
     }
 
-    public loadInterface(interfaceDeclaration: InterfaceDeclaration, fmxFileAnchor: Famix.IndexedFileAnchor) {
+    public loadInterface(interfaceDeclaration: InterfaceDeclaration, fmxFileAnchor: Famix.IndexedFileAnchor, fmxNameSpace: Famix.Namespace = null) {
         this.interfaces.push(interfaceDeclaration);
-        this.getFamiClass(interfaceDeclaration.getName(), fmxFileAnchor, true);;
+        var fmxClass = this.getFamiClass(interfaceDeclaration.getName(), fmxFileAnchor, true);
+        if (fmxNameSpace != null) {
+            fmxClass.setContainer(fmxNameSpace);
+        }
     }
 
-    private getFamiClass(name: string, fmxFileAnchor: Famix.IndexedFileAnchor, isInterface: boolean) {
+    private getFamiClass(name: string, fmxFileAnchor: Famix.IndexedFileAnchor, isInterface: boolean): Famix.Class {
         var fmxClass = new Famix.Class(this._repository).UpdateInfo(name, fmxFileAnchor, isInterface);
         this._repository.addElement(fmxClass);
+        return fmxClass;
     }
 }
