@@ -32,7 +32,7 @@ try {
         });
 
         file.getNamespaces().forEach(namespace => {
-            var fmxNamespace =helper.loadNamespace(namespace);
+            var fmxNamespace = helper.loadNamespace(namespace);
 
             // Load classes and interfaces inside a namespace
             namespace.getClasses().forEach(cls => {

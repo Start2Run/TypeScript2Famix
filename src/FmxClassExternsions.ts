@@ -24,6 +24,7 @@ declare module './lib/model/famix/class' {
       famixRepository: FamixRepository
     );
     AddProperties(props: any[], famixRepository: FamixRepository);
+    AddParameter(props: any[], famixRepository: FamixRepository);
     AddPropertiesWithTypes(props: any[], famixRepository: FamixRepository);
     AddInterfaceImplementations(
       implementations: ImplementationLocation[],
@@ -47,11 +48,11 @@ Class.prototype.AddMethods = function (methods: MethodDeclaration[], famixReposi
         var fmxMethod = new Famix.Method(famixRepository);
         fmxMethod.setName(method.getName())
         fmxMethod.setKind(method.getKindName())
+        
         var fmxFileAnchor = new Famix.IndexedFileAnchor(famixRepository);
         fmxFileAnchor.setStartPos(method.getStartLineNumber())
         fmxFileAnchor.setEndPos(method.getEndLineNumber())
         fmxFileAnchor.setElement(fmxMethod);
-        
         fmxFileAnchor.setFileName(((this as Famix.Class).getSourceAnchor() as Famix.IndexedFileAnchor).getFileName());
         fmxMethod.setParentType(this);
         fmxMethod.setNumberOfLinesOfCode(method.getEndLineNumber() - method.getStartLineNumber());
@@ -59,6 +60,12 @@ Class.prototype.AddMethods = function (methods: MethodDeclaration[], famixReposi
         if (!(this as Famix.Class).getIsInterface()) {
             fmxMethod.addModifiers(method.getScope());
         }
+
+        method.getParameters().forEach((param) => {
+          var fmxParameter = new Famix.Parameter(famixRepository);
+          fmxParameter.setName(param.getName());
+          fmxParameter.setParentBehaviouralEntity(fmxMethod);
+        });
     });
 }
 
@@ -91,6 +98,7 @@ Class.prototype.AddProperties = function (
     var fmxAttribute = new Famix.Attribute(famixRepository);
     fmxAttribute.setName(prop.getName());
     fmxAttribute.setParentType(this);
+    fmxAttribute.addModifiers(prop.getScope());
   });
 };
 
