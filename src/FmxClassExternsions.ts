@@ -1,76 +1,73 @@
 import * as Famix from './lib/model/famix';
 import { FamixRepository } from './lib/famix_repository';
 import { Class } from './lib/model/famix/class';
-import {
-  ClassDeclaration,
-  ImplementationLocation,
-  MethodDeclaration,
-} from 'ts-morph';
+import './FmxMethodExternsions'
 import { TsProperty } from './generatorTools/ts-property';
 import { TsMethod } from './generatorTools/ts-method';
 
 declare module './lib/model/famix/class' {
   interface Class {
     UpdateInfo(
-      name: string,      
+      name: string,
       fmxFileAnchor: Famix.IndexedFileAnchor,
       isInterface: boolean,
-	  fmxNamespace?: Famix.Namespace
+      fmxNamespace?: Famix.Namespace
     ): Class;
     AddMethods(methods: any[], famixRepository: FamixRepository);
     AddMethodsWithReturnTypes(methods: any[], famixRepository: FamixRepository);
     AddDerivedClasses(
-      derivedClasses: ClassDeclaration[],
+      derivedClasses: any[],
       famixRepository: FamixRepository
     );
     AddProperties(props: any[], famixRepository: FamixRepository);
     AddParameter(props: any[], famixRepository: FamixRepository);
     AddPropertiesWithTypes(props: any[], famixRepository: FamixRepository);
     AddInterfaceImplementations(
-      implementations: ImplementationLocation[],
+      implementations: any[],
       famixRepository: FamixRepository
     );
   }
 }
 
 Class.prototype.UpdateInfo = function (name: string, fmxFileAnchor: Famix.IndexedFileAnchor, isInterface: boolean, fmxNamespace?: Famix.Namespace) {
-    this.setName(name);
-    this.setIsInterface(isInterface);
-    if (fmxNamespace != null) {
-        this.setContainer(fmxNamespace);
-    }
-    fmxFileAnchor.setElement(this);
-    return this;
+  this.setName(name);
+  this.setIsInterface(isInterface);
+  if (fmxNamespace != null) {
+    this.setContainer(fmxNamespace);
+  }
+  fmxFileAnchor.setElement(this);
+  return this;
 }
 
-Class.prototype.AddMethods = function (methods: MethodDeclaration[], famixRepository: FamixRepository) {
-    methods.forEach(method => {
-        var fmxMethod = new Famix.Method(famixRepository);
-        fmxMethod.setName(method.getName())
-        fmxMethod.setKind(method.getKindName())
-        
-        var fmxFileAnchor = new Famix.IndexedFileAnchor(famixRepository);
-        fmxFileAnchor.setStartPos(method.getStartLineNumber())
-        fmxFileAnchor.setEndPos(method.getEndLineNumber())
-        fmxFileAnchor.setElement(fmxMethod);
-        fmxFileAnchor.setFileName(((this as Famix.Class).getSourceAnchor() as Famix.IndexedFileAnchor).getFileName());
-        fmxMethod.setParentType(this);
-        fmxMethod.setNumberOfLinesOfCode(method.getEndLineNumber() - method.getStartLineNumber());
+Class.prototype.AddMethods = function (methods: any[], famixRepository: FamixRepository) {
+  methods.forEach(method => {
+    var fmxMethod = new Famix.Method(famixRepository);
+    fmxMethod.setName(method.getName());
+    fmxMethod.setKind(method.getKindName());
+    fmxMethod.SetFileAnchor(famixRepository, (this.getSourceAnchor() as Famix.IndexedFileAnchor).getFileName(), method.getStartLineNumber(), method.getEndLineNumber());
+    fmxMethod.setParentType(this);
+    fmxMethod.setNumberOfLinesOfCode(method.getEndLineNumber() - method.getStartLineNumber());
 
-        if (!(this as Famix.Class).getIsInterface()) {
-            fmxMethod.addModifiers(method.getScope());
-        }
+    let signature = method.getName()
+      + "("
+      + method
+        .getParameters()
+        .map((parameter) => parameter.getText())
+        .toString()
+      + ")";
 
-        method.getParameters().forEach((param) => {
-          var fmxParameter = new Famix.Parameter(famixRepository);
-          fmxParameter.setName(param.getName());
-          fmxParameter.setParentBehaviouralEntity(fmxMethod);
-        });
-    });
+    fmxMethod.setSignature(signature);
+
+    if (!(this as Famix.Class).getIsInterface()) {
+      fmxMethod.addModifiers(method.getScope());
+      fmxMethod.setNumberOfStatements(method.getStatements().length);
+    }
+    fmxMethod.AddParameters(method.getParameters(), famixRepository);
+  });
 }
 
 Class.prototype.AddMethodsWithReturnTypes = function (
-  methods: MethodDeclaration[],
+  methods: any[],
   famixRepository: FamixRepository
 ) {
   methods.forEach((method) => {
@@ -79,7 +76,7 @@ Class.prototype.AddMethodsWithReturnTypes = function (
 };
 
 Class.prototype.AddDerivedClasses = function (
-  derivedClasses: ClassDeclaration[],
+  derivedClasses: any[],
   famixRepository: FamixRepository
 ) {
   derivedClasses.forEach((derivedClass) => {
@@ -112,7 +109,7 @@ Class.prototype.AddPropertiesWithTypes = function (
 };
 
 Class.prototype.AddInterfaceImplementations = function (
-  implementations: ImplementationLocation[],
+  implementations: any[],
   famixRepository: FamixRepository
 ) {
   implementations.forEach((implementation) => {
