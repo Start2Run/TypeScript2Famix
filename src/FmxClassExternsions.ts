@@ -4,6 +4,10 @@ import { Class } from './lib/model/famix/class';
 import './FmxMethodExternsions'
 import { TsProperty } from './generatorTools/ts-property';
 import { TsMethod } from './generatorTools/ts-method';
+import { MethodSignature } from 'ts-morph';
+
+const cyclomatic = require('./cyclomatic');
+const { ScriptTarget } = require('typescript');
 
 declare module './lib/model/famix/class' {
   interface Class {
@@ -40,13 +44,17 @@ Class.prototype.UpdateInfo = function (name: string, fmxFileAnchor: Famix.Indexe
 }
 
 Class.prototype.AddMethods = function (methods: any[], famixRepository: FamixRepository) {
+ 
+  var cc = cyclomatic.calculate((this.getSourceAnchor() as Famix.IndexedFileAnchor).getFileName(), ScriptTarget.ES2015);
+ 
   methods.forEach(method => {
-    var fmxMethod = new Famix.Method(famixRepository);
-    fmxMethod.setName(method.getName());
-    fmxMethod.setKind(method.getKindName());
-    fmxMethod.SetFileAnchor(famixRepository, (this.getSourceAnchor() as Famix.IndexedFileAnchor).getFileName(), method.getStartLineNumber(), method.getEndLineNumber());
-    fmxMethod.setParentType(this);
+    var fmxMethod = new Famix.Method(famixRepository)
+    fmxMethod.setName(method.getName())
+    fmxMethod.setKind(method.getKindName())
+    fmxMethod.SetFileAnchor(famixRepository, (this.getSourceAnchor() as Famix.IndexedFileAnchor).getFileName(), method.getStartLineNumber(), method.getEndLineNumber())
+    fmxMethod.setParentType(this)
     fmxMethod.setNumberOfLinesOfCode(method.getEndLineNumber() - method.getStartLineNumber());
+    fmxMethod.setCyclomaticComplexity(cc[method.getName()])
 
     let signature = method.getName()
       + "("
