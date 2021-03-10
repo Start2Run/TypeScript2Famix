@@ -4,7 +4,6 @@ import { Class } from './lib/model/famix/class';
 import './FmxMethodExternsions'
 import { TsProperty } from './generatorTools/ts-property';
 import { TsMethod } from './generatorTools/ts-method';
-import { MethodSignature } from 'ts-morph';
 
 const cyclomatic = require('./cyclomatic');
 const { ScriptTarget } = require('typescript');
@@ -51,7 +50,7 @@ Class.prototype.AddMethods = function (methods: any[], famixRepository: FamixRep
     var fmxMethod = new Famix.Method(famixRepository)
     fmxMethod.setName(method.getName())
     fmxMethod.setKind(method.getKindName())
-    fmxMethod.SetFileAnchor(famixRepository, (this.getSourceAnchor() as Famix.IndexedFileAnchor).getFileName(), method.getStartLineNumber(), method.getEndLineNumber())
+    fmxMethod.SetFileAnchor(famixRepository, (this.getSourceAnchor() as Famix.IndexedFileAnchor).getFileName(), method.getStart(), method.getEnd())
     fmxMethod.setParentType(this)
     fmxMethod.setNumberOfLinesOfCode(method.getEndLineNumber() - method.getStartLineNumber());
     fmxMethod.setCyclomaticComplexity(cc[method.getName()])

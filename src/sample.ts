@@ -21,14 +21,13 @@ try {
     let helper = new Helper(fmxRep);
 
     sourceFiles.forEach(file => {
-        var fmxFileAnchor = helper.loadFileAnchors(file);
-
         // Load classes and interfaces without namespace
+        var filePath = file.getFilePath();
         file.getClasses().forEach(cls => {
-            helper.loadClass(cls, fmxFileAnchor);
+            helper.loadClass(cls, filePath);
         });
         file.getInterfaces().forEach(interf => {
-            helper.loadInterface(interf, fmxFileAnchor);
+            helper.loadInterface(interf, file.getFilePath());
         });
 
         file.getNamespaces().forEach(namespace => {
@@ -36,10 +35,10 @@ try {
 
             // Load classes and interfaces inside a namespace
             namespace.getClasses().forEach(cls => {
-                helper.loadClass(cls, fmxFileAnchor, fmxNamespace);
+                helper.loadClass(cls, filePath, fmxNamespace);
             });
             namespace.getInterfaces().forEach(interf => {
-                helper.loadInterface(interf, fmxFileAnchor, fmxNamespace);
+                helper.loadInterface(interf, filePath, fmxNamespace);
             });
         });
     });

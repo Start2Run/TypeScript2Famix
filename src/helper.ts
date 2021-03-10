@@ -13,11 +13,11 @@ export class Helper {
         this._repository = repository;
     }
 
-    public loadFileAnchors(sourceFile: SourceFile): Famix.IndexedFileAnchor {
+    public createFileAnchor(name: string, start: number, end: number): Famix.IndexedFileAnchor {
         var fmxFileAnchor = new Famix.IndexedFileAnchor(this._repository);
-        fmxFileAnchor.setFileName(sourceFile.getFilePath())
-        fmxFileAnchor.setStartPos(sourceFile.getStartLineNumber())
-        fmxFileAnchor.setEndPos(sourceFile.getEndLineNumber())
+        fmxFileAnchor.setFileName(name)
+        fmxFileAnchor.setStartPos(start)
+        fmxFileAnchor.setEndPos(end)
         return fmxFileAnchor;
     }
 
@@ -35,16 +35,18 @@ export class Helper {
         return fmxNamespace;
     }
 
-    public loadClass(classDeclaration: ClassDeclaration, fmxFileAnchor: Famix.IndexedFileAnchor, fmxNameSpace: Famix.Namespace = null) {
+    public loadClass(classDeclaration: ClassDeclaration, fileName: string, fmxNameSpace: Famix.Namespace = null) {
         this.classes.push(classDeclaration);
+        var fmxFileAnchor = this.createFileAnchor(fileName, classDeclaration.getStart(), classDeclaration.getEnd())
         var fmxClass = this.getFamiClass(classDeclaration.getName(), fmxFileAnchor, false);
         if (fmxNameSpace != null) {
             fmxClass.setContainer(fmxNameSpace);
         }
     }
 
-    public loadInterface(interfaceDeclaration: InterfaceDeclaration, fmxFileAnchor: Famix.IndexedFileAnchor, fmxNameSpace: Famix.Namespace = null) {
+    public loadInterface(interfaceDeclaration: InterfaceDeclaration, fileName: string, fmxNameSpace: Famix.Namespace = null) {
         this.interfaces.push(interfaceDeclaration);
+        var fmxFileAnchor = this.createFileAnchor(fileName, interfaceDeclaration.getStart(), interfaceDeclaration.getEnd())
         var fmxClass = this.getFamiClass(interfaceDeclaration.getName(), fmxFileAnchor, true);
         if (fmxNameSpace != null) {
             fmxClass.setContainer(fmxNameSpace);
