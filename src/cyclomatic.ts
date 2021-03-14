@@ -4,7 +4,6 @@
 const { forEachChild, SyntaxKind, createSourceFile } = require('typescript');
 const { isFunctionWithBody } = require('tsutils');
 const { existsSync, readFileSync } = require('fs');
-
 const { isIdentifier } = require('typescript');
 
 const getNodeName = (node) => {
@@ -68,11 +67,11 @@ const calculateFromSource = (ctx) => {
 };
 exports.calculateFromSource = calculateFromSource;
 
-exports.calculate = (filePath, target) => {
+exports.calculate = (filePath) => {
     if (!existsSync(filePath)) {
         throw new Error(`File "${filePath}" does not exists`);
     }
     const sourceText = readFileSync(filePath).toString();
-    const source = createSourceFile(filePath, sourceText, target);
+    const source = createSourceFile(filePath, sourceText, isIdentifier.ES2015);
     return calculateFromSource(source);
 };
