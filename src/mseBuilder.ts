@@ -5,14 +5,14 @@ import * as Famix from "./lib/model/famix";
 import { mseClassHelper } from './mseClassHelper';
 import { mseMethodHelper } from './mseMethodHelper';
 import { msePropertyHelper } from './msePropertyHelper';
-
+import { Globals } from'./Globals';
 
 export class mseBuilder {
     private _repository: FamixRepository;
     private _namespaces = new Map<string, Famix.Namespace>();
     private _classes: ClassDeclaration[] = [];
     private _interfaces: InterfaceDeclaration[] = [];
-    private 
+    private _fmxGlobalNamespace: Famix.Namespace;
 
     private _fmxClassHelper: mseClassHelper;
     private _fmxMethodHelper: mseMethodHelper;
@@ -20,9 +20,13 @@ export class mseBuilder {
 
     constructor() {
         this._repository = new FamixRepository()
+
+        this._fmxGlobalNamespace = new Famix.Namespace(this._repository)
+        this._fmxGlobalNamespace.setName(Globals.GlobalNameSpace)
+
         this._fmxClassHelper = new mseClassHelper(this._repository)
-        this._fmxMethodHelper = new mseMethodHelper(this._repository)
-        this._fmxPropertyHelper = new msePropertyHelper(this._repository)
+        this._fmxMethodHelper = new mseMethodHelper(this._repository,this._fmxGlobalNamespace)
+        this._fmxPropertyHelper = new msePropertyHelper(this._repository, this._fmxGlobalNamespace)
     }
 
     public loadNamespace(namespaceDeclaration: NamespaceDeclaration): Famix.Namespace {
@@ -40,18 +44,26 @@ export class mseBuilder {
     }
 
     public addClass(classDeclaration: ClassDeclaration, sourceFileName: string, fmxNameSpace: Famix.Namespace = null) {
+        var name = classDeclaration.getName();
         this._fmxClassHelper.loadClass(classDeclaration, sourceFileName, fmxNameSpace)
         this._classes.push(classDeclaration)
+        fmxNameSpace.addTypes(this.getFamixClass(name))
     }
 
     public addInterface(interfaceDeclaration: InterfaceDeclaration, sourceFileName: string, fmxNameSpace: Famix.Namespace = null) {
+        var name = interfaceDeclaration.getName();
         this._fmxClassHelper.loadInterface(interfaceDeclaration, sourceFileName, fmxNameSpace)
         this._interfaces.push(interfaceDeclaration)
+        fmxNameSpace.addTypes(this.getFamixClass(name))
     }
 
     public addMethods(name: string, classDeclaration: any) {
         var fmxClass = this.getFamixClass(name)
         this._fmxMethodHelper.addMethods(classDeclaration.getMethods(), fmxClass)
+        if(!fmxClass.getIsInterface())
+        {
+            this._fmxMethodHelper.addConstructors(classDeclaration.getConstructors(), fmxClass)
+        }
     }
 
     public addProperties(name: string, classDeclaration: any) {
@@ -86,9 +98,6 @@ export class mseBuilder {
     public getInterfaceDeclarations(): InterfaceDeclaration[] {
         return this._interfaces
     }
-
-    public addType()
-    {}
 
     private getFamixClass(className: string): Famix.Class {
         return this._repository.getFamixClass(className);
