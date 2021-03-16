@@ -1,11 +1,13 @@
 import { FamixRepository } from './lib/famix_repository';
-import { ClassDeclaration, InterfaceDeclaration, NamespaceDeclaration } from "ts-morph";
+import { ClassDeclaration, FunctionDeclaration, InterfaceDeclaration, NamespaceDeclaration, VariableDeclaration } from "ts-morph";
 import * as Famix from "./lib/model/famix";
 
 import { mseClassHelper } from './mseClassHelper';
 import { mseMethodHelper } from './mseMethodHelper';
 import { msePropertyHelper } from './msePropertyHelper';
-import { Globals } from'./Globals';
+import { Globals } from './Globals';
+import { Function } from './lib/model/famix/function';
+import { mseFileAnchorHelper } from './mseFileAnchorHelper';
 
 export class mseBuilder {
     private _repository: FamixRepository;
@@ -13,6 +15,7 @@ export class mseBuilder {
     private _classes: ClassDeclaration[] = [];
     private _interfaces: InterfaceDeclaration[] = [];
     private _fmxGlobalNamespace: Famix.Namespace;
+    private _fmxGlobalClass: Famix.Class;
 
     private _fmxClassHelper: mseClassHelper;
     private _fmxMethodHelper: mseMethodHelper;
@@ -24,8 +27,11 @@ export class mseBuilder {
         this._fmxGlobalNamespace = new Famix.Namespace(this._repository)
         this._fmxGlobalNamespace.setName(Globals.GlobalNameSpace)
 
+        this._fmxGlobalClass = new Famix.Class(this._repository)
+        this._fmxGlobalClass.setName(Globals.GlobcalClass)
+
         this._fmxClassHelper = new mseClassHelper(this._repository)
-        this._fmxMethodHelper = new mseMethodHelper(this._repository,this._fmxGlobalNamespace)
+        this._fmxMethodHelper = new mseMethodHelper(this._repository, this._fmxGlobalNamespace)
         this._fmxPropertyHelper = new msePropertyHelper(this._repository, this._fmxGlobalNamespace)
     }
 
@@ -60,8 +66,7 @@ export class mseBuilder {
     public addMethods(name: string, classDeclaration: any) {
         var fmxClass = this.getFamixClass(name)
         this._fmxMethodHelper.addMethods(classDeclaration.getMethods(), fmxClass)
-        if(!fmxClass.getIsInterface())
-        {
+        if (!fmxClass.getIsInterface()) {
             this._fmxMethodHelper.addConstructors(classDeclaration.getConstructors(), fmxClass)
         }
     }
@@ -89,7 +94,27 @@ export class mseBuilder {
             fmxInheritance.setSubclass(subclass);
             fmxInheritance.setSuperclass(fmxClass);
         });
-    };
+    }
+
+    public addFunctions(functions: FunctionDeclaration[], fileName: string) {
+        functions.forEach((func) => {
+            var fmxFunction = new Famix.Function(this._repository)
+            fmxFunction.setName(func.getName())
+            var fmxFileSourceAnchor = mseFileAnchorHelper.createFileAnchor(this._repository, fileName, func.getStart(), func.getEnd())
+            fmxFunction.setSourceAnchor(fmxFileSourceAnchor)
+            fmxFunction.setContainer(this._fmxGlobalNamespace)
+        });
+    }
+
+    public addVariables(variables: VariableDeclaration[], fileName: string)
+    {
+        variables.forEach((variable) => {
+            var fmxVariable = new Famix.GlobalVariable(this._repository)
+            fmxVariable.setName(variable.getName())
+            var fmxFileSourceAnchor = mseFileAnchorHelper.createFileAnchor(this._repository, fileName, func.getStart(), func.getEnd())
+            fmxVariable.setSourceAnchor(fmxFileSourceAnchor)
+        });
+    }
 
     public getClassDeclarations(): ClassDeclaration[] {
         return this._classes

@@ -13,9 +13,14 @@ if (process.argv.length != 3) {
 var folderPath = process.argv[2];
 
 try {
-    const sourceFiles = project.addSourceFilesAtPaths(folderPath + "/*.ts");
+    const sourceFiles = project.addSourceFilesAtPaths(folderPath + "/**/*.ts");
 
     var builder = new mseBuilder();
+
+    sourceFiles.forEach(file => {
+        builder.addFunctions(file.getFunctions(), file.getFilePath())
+        var v= file.getVariableDeclarations()
+    });
 
     sourceFiles.forEach(file => {
         // Load classes and interfaces without namespace

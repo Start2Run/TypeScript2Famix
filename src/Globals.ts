@@ -1,5 +1,6 @@
 export class Globals {
-    public static GlobalNameSpace = "Global Namespace"
+    public static GlobalNameSpace = "GlobalNamespace"
+    public static GlobcalClass = "GlobalClass"
     public static ConstructorType = "constructor"
     public static VoidType = "void"
 }
