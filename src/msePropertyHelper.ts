@@ -1,6 +1,8 @@
 import { FamixRepository } from './lib/famix_repository';
-import { PropertyDeclaration, ClassDeclaration } from "ts-morph";
+import { PropertyDeclaration, AccessorDeclaration } from "ts-morph";
 import * as Famix from "./lib/model/famix";
+import { Access } from './lib/model/famix/access';
+import { Invocation } from './lib/model/famix/invocation';
 
 export class msePropertyHelper {
 
@@ -20,6 +22,17 @@ export class msePropertyHelper {
             fmxAttribute.addModifiers(prop.getScope());
             var fmxType = this.getFamixType(prop.getType().getText())
             fmxAttribute.setDeclaredType(fmxType)
+        });
+    };
+
+    public addSetAccessors = function (accessors: AccessorDeclaration[], fmxClass: Famix.Class) {
+        accessors.forEach((accessor) => {
+            //var fmxAccessor = new Famix.Access(this._repository);
+            // fmxAccessor.setAccessor(prop.getName());
+            // fmxAccessor.setParentType(fmxClass);
+            // fmxAccessor.addModifiers(prop.getScope());
+            // var fmxType = this.getFamixType(prop.getType().getText())
+            // fmxAccessor.setDeclaredType(fmxType)
         });
     };
 

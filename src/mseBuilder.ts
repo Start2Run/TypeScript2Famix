@@ -1,5 +1,5 @@
 import { FamixRepository } from './lib/famix_repository';
-import { ClassDeclaration, FunctionDeclaration, InterfaceDeclaration, NamespaceDeclaration, VariableDeclaration } from "ts-morph";
+import { ClassDeclaration, FunctionDeclaration, InterfaceDeclaration, NamespaceDeclaration, VariableDeclaration, MethodDeclaration } from 'ts-morph';
 import * as Famix from "./lib/model/famix";
 
 import { mseClassHelper } from './mseClassHelper';
@@ -65,10 +65,20 @@ export class mseBuilder {
 
     public addMethods(name: string, classDeclaration: any) {
         var fmxClass = this.getFamixClass(name)
-        this._fmxMethodHelper.addMethods(classDeclaration.getMethods(), fmxClass)
         if (!fmxClass.getIsInterface()) {
             this._fmxMethodHelper.addConstructors(classDeclaration.getConstructors(), fmxClass)
         }
+        this._fmxMethodHelper.addMethods(classDeclaration.getMethods(), fmxClass)
+    }
+
+    public addMethodReferences(method:MethodDeclaration, className:string) {
+        if (method.findReferences != undefined) {
+            var fmxClass = this.getFamixClass(className)
+            var fmxMethod = this.getFamixMethod(method.getName(), fmxClass)
+            if (fmxMethod != null) {
+                this._fmxMethodHelper.addReferences(method, fmxMethod, fmxClass)
+            }
+          }
     }
 
     public addProperties(name: string, classDeclaration: any) {
@@ -111,7 +121,7 @@ export class mseBuilder {
         variables.forEach((variable) => {
             var fmxVariable = new Famix.GlobalVariable(this._repository)
             fmxVariable.setName(variable.getName())
-            var fmxFileSourceAnchor = mseFileAnchorHelper.createFileAnchor(this._repository, fileName, func.getStart(), func.getEnd())
+            var fmxFileSourceAnchor = mseFileAnchorHelper.createFileAnchor(this._repository, fileName, variable.getStart(), variable.getEnd())
             fmxVariable.setSourceAnchor(fmxFileSourceAnchor)
         });
     }
@@ -127,6 +137,18 @@ export class mseBuilder {
     private getFamixClass(className: string): Famix.Class {
         return this._repository.getFamixClass(className);
     }
+
+    private getFamixMethod(methodName: string, fmxClass: Famix.Class):Famix.Method {
+        let fmxMethod :Famix.Method
+        fmxClass.getMethods().forEach(m => {
+          if (m.getName() == methodName) {
+              fmxMethod = m;
+              return;
+          }
+        })
+        return fmxMethod;
+    }
+
 
     public getMSE(): string {
         return this._repository.getMSE()

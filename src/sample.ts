@@ -19,7 +19,7 @@ try {
 
     sourceFiles.forEach(file => {
         builder.addFunctions(file.getFunctions(), file.getFilePath())
-        var v= file.getVariableDeclarations()
+        builder.addVariables(file.getVariableDeclarations(),file.getFilePath())
     });
 
     sourceFiles.forEach(file => {
@@ -42,8 +42,12 @@ try {
             namespace.getInterfaces().forEach(interf => {
                 builder.addInterface(interf, filePath, fmxNamespace);
             });
+
+            builder.addFunctions(namespace.getFunctions(), file.getFilePath())
+            builder.addVariables(namespace.getVariableDeclarations(),file.getFilePath())
         });
     });
+
     builder.getClassDeclarations().forEach(cls => {
         builder.addMethods(cls.getName(),cls)
         builder.addProperties(cls.getName(),cls);
@@ -54,6 +58,12 @@ try {
         builder.addMethods(interf.getName(), interf)
         builder.addProperties(interf.getName(), interf);
         builder.addInterfaceImplementations(interf.getName(), interf.getImplementations())
+    });
+
+    builder.getClassDeclarations().forEach(cls => {
+        cls.getMethods().forEach(meth => {
+            builder.addMethodReferences(meth, cls.getName())
+        })
     });
 
     var mse = builder.getMSE();
