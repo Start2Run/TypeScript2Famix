@@ -19,7 +19,13 @@ export class msePropertyHelper {
             var fmxAttribute = new Famix.Attribute(this._repository);
             fmxAttribute.setName(prop.getName());
             fmxAttribute.setParentType(fmxClass);
-            fmxAttribute.addModifiers(prop.getScope());
+            try {
+                fmxAttribute.addModifiers(prop.getScope());
+            }
+            catch (Error) {
+                console.log(Error.message);
+                return;
+            }
             var fmxType = this.getFamixType(prop.getType().getText())
             fmxAttribute.setDeclaredType(fmxType)
         });
@@ -44,7 +50,10 @@ export class msePropertyHelper {
         fmxClass = new Famix.Class(this._repository)
         fmxClass.setName(name)
         fmxClass.setContainer(this._fmxGlobalNamespace)
-        this._fmxGlobalNamespace.addTypes(fmxClass)
+        if (fmxClass != null) {
+            this._fmxGlobalNamespace.addTypes(fmxClass)
+        }
+
         return fmxClass;
     }
 }

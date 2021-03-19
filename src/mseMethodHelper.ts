@@ -57,7 +57,12 @@ export class mseMethodHelper {
     indexedFileAnchor.setElement(fmxMethod)
 
     if (!fmxClass.getIsInterface()) {
-      fmxMethod.addModifiers(method.getScope())
+      try {
+        fmxMethod.addModifiers(method.getScope())
+      }
+      catch (Error) {
+        console.log(Error.message);
+      }
       fmxMethod.setNumberOfStatements(method.getStatements().length)
     }
     this.addParameters(method, fmxMethod)
@@ -70,7 +75,7 @@ export class mseMethodHelper {
     node.findReferencesAsNodes().forEach(x => this.addFamixInvocation(x, null, fmxMethod, fmxClass))
   }
 
-  private addFamixInvocation(node: any, referencingMethodName: string, referencedMethod: Famix.Method, fmxClass: Famix.Class):boolean{
+  private addFamixInvocation(node: any, referencingMethodName: string, referencedMethod: Famix.Method, fmxClass: Famix.Class): boolean {
     var nodes = Array.from(node.getAncestors())
     for (var i = 0; i < nodes.length; i++) {
       var y = nodes[i] as any
@@ -90,8 +95,9 @@ export class mseMethodHelper {
           var newInvocation = new Famix.Invocation(this._repository)
           newInvocation.addCandidates(referencedMethod)
           newInvocation.addCandidates(referencingMethod)
-          newInvocation.setSender(referencedMethod)
-          newInvocation.setReceiver(referencingMethod)
+          newInvocation.setSender(referencingMethod)
+          newInvocation.setReceiver(referencedMethod)
+          referencedMethod.addIncomingInvocations(newInvocation)
           return true;
         }
       }
@@ -149,7 +155,10 @@ export class mseMethodHelper {
     fmxClass = new Famix.Class(this._repository)
     fmxClass.setName(name)
     fmxClass.setContainer(this._fmxGlobalNamespace)
-    this._fmxGlobalNamespace.addTypes(fmxClass)
+
+    if (fmxClass != null) {
+      this._fmxGlobalNamespace.addTypes(fmxClass)
+    }
     return fmxClass;
   }
 }

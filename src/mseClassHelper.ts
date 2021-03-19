@@ -26,7 +26,7 @@ export class mseClassHelper {
             fmxClass.setContainer(fmxNameSpace);
         }
     }
-    
+
     private getFamiClass(name: string, fmxFileAnchor: Famix.IndexedFileAnchor, isInterface: boolean): Famix.Class {
         var fmxClass = new Famix.Class(this._repository)
         this.updateInfo(fmxClass, name, fmxFileAnchor, isInterface);
