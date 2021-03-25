@@ -49,8 +49,17 @@ export class mseMethodHelper {
     fmxMethod.setParentType(fmxClass)
     fmxMethod.setNumberOfLinesOfCode(method.getEndLineNumber() - method.getStartLineNumber());
     if (!isConstructor) {
-      fmxMethod.setCyclomaticComplexity(cc[method.getName()])
+      if (cc[method.getName()] == null) {
+        fmxMethod.setCyclomaticComplexity(1)
+      }
+      else
+      {
+        fmxMethod.setCyclomaticComplexity(cc[method.getName()])
+      }
       this.setSignature(method, fmxMethod)
+    }
+    else {
+      fmxMethod.setCyclomaticComplexity(1)
     }
 
     var indexedFileAnchor = mseFileAnchorHelper.createFileAnchor(this._repository, fileName, method.getStart(), method.getEnd())
