@@ -6,7 +6,6 @@ import { mseClassHelper } from './mseClassHelper';
 import { mseMethodHelper } from './mseMethodHelper';
 import { msePropertyHelper } from './msePropertyHelper';
 import { Globals } from './Globals';
-import { Function } from './lib/model/famix/function';
 import { mseFileAnchorHelper } from './mseFileAnchorHelper';
 
 export class mseBuilder {

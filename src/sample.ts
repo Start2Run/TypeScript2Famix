@@ -1,7 +1,6 @@
 import { Project } from "ts-morph";
 const project = new Project();
 
-import './FmxClassExternsions'
 import { mseBuilder } from  './mseBuilder'
 
 import * as fs from 'fs';

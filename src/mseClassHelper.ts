@@ -1,5 +1,5 @@
 import './mseFileAnchorHelper'
-import { ClassDeclaration, InterfaceDeclaration, PropertyDeclaration } from "ts-morph";
+import { ClassDeclaration, InterfaceDeclaration } from "ts-morph";
 import * as Famix from "./lib/model/famix";
 import { mseFileAnchorHelper } from './mseFileAnchorHelper';
 import { FamixRepository } from './lib/famix_repository';

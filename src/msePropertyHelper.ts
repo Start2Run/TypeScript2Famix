@@ -1,8 +1,6 @@
 import { FamixRepository } from './lib/famix_repository';
 import { PropertyDeclaration, AccessorDeclaration } from "ts-morph";
 import * as Famix from "./lib/model/famix";
-import { Access } from './lib/model/famix/access';
-import { Invocation } from './lib/model/famix/invocation';
 
 export class msePropertyHelper {
 
