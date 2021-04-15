@@ -1,13 +1,12 @@
 // automatically generated code, please do not change
 
-import {FamixMseExporter} from "../../famix_mse_exporter";
-import {Function} from "./function";
-import {NamedEntity} from "./named_entity";
-import {Type} from "./type";
-import {AnnotationType} from "./annotation_type";
+import { FamixMseExporter } from '../../famix_mse_exporter';
+import { Function } from './function';
+import { NamedEntity } from './named_entity';
+import { Type } from './type';
+import { AnnotationType } from './annotation_type';
 
 export class ContainerEntity extends NamedEntity {
-
   private containerEntityTypes: Set<Type> = new Set();
 
   // manyOne.Getter
@@ -56,20 +55,16 @@ export class ContainerEntity extends NamedEntity {
     }
   }
 
-
   public getMSE(): string {
-    const mse: FamixMseExporter = new FamixMseExporter("FAMIX.ContainerEntity", this);
+    const mse: FamixMseExporter = new FamixMseExporter('FAMIX.ContainerEntity', this);
     this.addPropertiesToExporter(mse);
     return mse.getMSE();
   }
 
   public addPropertiesToExporter(exporter: FamixMseExporter) {
     super.addPropertiesToExporter(exporter);
-    exporter.addProperty("types", this.getTypes());
-    exporter.addProperty("functions", this.getFunctions());
-    exporter.addProperty("definedAnnotationTypes", this.getDefinedAnnotationTypes());
-
+    exporter.addProperty('types', this.getTypes());
+    exporter.addProperty('functions', this.getFunctions());
+    exporter.addProperty('definedAnnotationTypes', this.getDefinedAnnotationTypes());
   }
-
 }
-

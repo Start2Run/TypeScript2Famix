@@ -1,11 +1,10 @@
 // automatically generated code, please do not change
 
-import {FamixMseExporter} from "../../famix_mse_exporter";
-import {Entity} from "./entity";
-import {SourcedEntity} from "./sourced_entity";
+import { FamixMseExporter } from '../../famix_mse_exporter';
+import { Entity } from './entity';
+import { SourcedEntity } from './sourced_entity';
 
 export class SourceLanguage extends Entity {
-
   private sourceLanguageSourcedEntities: Set<SourcedEntity> = new Set();
 
   // manyOne.Getter
@@ -22,18 +21,14 @@ export class SourceLanguage extends Entity {
     }
   }
 
-
   public getMSE(): string {
-    const mse: FamixMseExporter = new FamixMseExporter("FAMIX.SourceLanguage", this);
+    const mse: FamixMseExporter = new FamixMseExporter('FAMIX.SourceLanguage', this);
     this.addPropertiesToExporter(mse);
     return mse.getMSE();
   }
 
   public addPropertiesToExporter(exporter: FamixMseExporter) {
     super.addPropertiesToExporter(exporter);
-    exporter.addProperty("sourcedEntities", this.getSourcedEntities());
-
+    exporter.addProperty('sourcedEntities', this.getSourcedEntities());
   }
-
 }
-

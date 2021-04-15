@@ -1,10 +1,9 @@
 // automatically generated code, please do not change
 
-import {FamixMseExporter} from "../../famix_mse_exporter";
-import {Association} from "./association";
+import { FamixMseExporter } from '../../famix_mse_exporter';
+import { Association } from './association';
 
 export class Include extends Association {
-
   private includeSource: Object;
 
   // @FameProperty(name = "source")
@@ -27,19 +26,15 @@ export class Include extends Association {
     this.includeTarget = includeTarget;
   }
 
-
   public getMSE(): string {
-    const mse: FamixMseExporter = new FamixMseExporter("FAMIX.Include", this);
+    const mse: FamixMseExporter = new FamixMseExporter('FAMIX.Include', this);
     this.addPropertiesToExporter(mse);
     return mse.getMSE();
   }
 
   public addPropertiesToExporter(exporter: FamixMseExporter) {
     super.addPropertiesToExporter(exporter);
-    exporter.addProperty("source", this.getSource());
-    exporter.addProperty("target", this.getTarget());
-
+    exporter.addProperty('source', this.getSource());
+    exporter.addProperty('target', this.getTarget());
   }
-
 }
-

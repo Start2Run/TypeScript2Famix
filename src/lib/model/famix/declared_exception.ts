@@ -1,11 +1,10 @@
 // automatically generated code, please do not change
 
-import {FamixMseExporter} from "../../famix_mse_exporter";
-import {Method} from "./method";
-import {Exception} from "./exception";
+import { FamixMseExporter } from '../../famix_mse_exporter';
+import { Method } from './method';
+import { Exception } from './exception';
 
 export class DeclaredException extends Exception {
-
   private declaredExceptionDefiningMethod: Method;
 
   // oneMany.Getter
@@ -20,18 +19,14 @@ export class DeclaredException extends Exception {
     newDefiningMethod.getDeclaredExceptions().add(this);
   }
 
-
   public getMSE(): string {
-    const mse: FamixMseExporter = new FamixMseExporter("FAMIX.DeclaredException", this);
+    const mse: FamixMseExporter = new FamixMseExporter('FAMIX.DeclaredException', this);
     this.addPropertiesToExporter(mse);
     return mse.getMSE();
   }
 
   public addPropertiesToExporter(exporter: FamixMseExporter) {
     super.addPropertiesToExporter(exporter);
-    exporter.addProperty("definingMethod", this.getDefiningMethod());
-
+    exporter.addProperty('definingMethod', this.getDefiningMethod());
   }
-
 }
-

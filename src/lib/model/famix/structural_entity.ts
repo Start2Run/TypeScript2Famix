@@ -1,13 +1,12 @@
 // automatically generated code, please do not change
 
-import {FamixMseExporter} from "../../famix_mse_exporter";
-import {DereferencedInvocation} from "./dereferenced_invocation";
-import {Type} from "./type";
-import {Access} from "./access";
-import {LeafEntity} from "./leaf_entity";
+import { FamixMseExporter } from '../../famix_mse_exporter';
+import { DereferencedInvocation } from './dereferenced_invocation';
+import { Type } from './type';
+import { Access } from './access';
+import { LeafEntity } from './leaf_entity';
 
 export class StructuralEntity extends LeafEntity {
-
   private structuralEntityIncomingAccesses: Set<Access> = new Set();
 
   // manyOne.Getter
@@ -54,20 +53,16 @@ export class StructuralEntity extends LeafEntity {
     }
   }
 
-
   public getMSE(): string {
-    const mse: FamixMseExporter = new FamixMseExporter("FAMIX.StructuralEntity", this);
+    const mse: FamixMseExporter = new FamixMseExporter('FAMIX.StructuralEntity', this);
     this.addPropertiesToExporter(mse);
     return mse.getMSE();
   }
 
   public addPropertiesToExporter(exporter: FamixMseExporter) {
     super.addPropertiesToExporter(exporter);
-    exporter.addProperty("incomingAccesses", this.getIncomingAccesses());
-    exporter.addProperty("declaredType", this.getDeclaredType());
-    exporter.addProperty("dereferencedInvocations", this.getDereferencedInvocations());
-
+    exporter.addProperty('incomingAccesses', this.getIncomingAccesses());
+    exporter.addProperty('declaredType', this.getDeclaredType());
+    exporter.addProperty('dereferencedInvocations', this.getDereferencedInvocations());
   }
-
 }
-

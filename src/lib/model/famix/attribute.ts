@@ -1,11 +1,10 @@
 // automatically generated code, please do not change
 
-import {FamixMseExporter} from "../../famix_mse_exporter";
-import {StructuralEntity} from "./structural_entity";
-import {Type} from "./type";
+import { FamixMseExporter } from '../../famix_mse_exporter';
+import { StructuralEntity } from './structural_entity';
+import { Type } from './type';
 
 export class Attribute extends StructuralEntity {
-
   private attributeHasClassScope: boolean;
 
   // @FameProperty(name = "hasClassScope")
@@ -31,19 +30,15 @@ export class Attribute extends StructuralEntity {
     newParentType.getAttributes().add(this);
   }
 
-
   public getMSE(): string {
-    const mse: FamixMseExporter = new FamixMseExporter("FAMIX.Attribute", this);
+    const mse: FamixMseExporter = new FamixMseExporter('FAMIX.Attribute', this);
     this.addPropertiesToExporter(mse);
     return mse.getMSE();
   }
 
   public addPropertiesToExporter(exporter: FamixMseExporter) {
     super.addPropertiesToExporter(exporter);
-    exporter.addProperty("hasClassScope", this.getHasClassScope());
-    exporter.addProperty("parentType", this.getParentType());
-
+    exporter.addProperty('hasClassScope', this.getHasClassScope());
+    exporter.addProperty('parentType', this.getParentType());
   }
-
 }
-

@@ -1,13 +1,12 @@
 // automatically generated code, please do not change
 
-import {FamixMseExporter} from "../../famix_mse_exporter";
-import {Invocation} from "./invocation";
-import {SourcedEntity} from "./sourced_entity";
-import {Package} from "./package";
-import {AnnotationInstance} from "./annotation_instance";
+import { FamixMseExporter } from '../../famix_mse_exporter';
+import { Invocation } from './invocation';
+import { SourcedEntity } from './sourced_entity';
+import { Package } from './package';
+import { AnnotationInstance } from './annotation_instance';
 
 export class NamedEntity extends SourcedEntity {
-
   private namedEntityReceivingInvocations: Set<Invocation> = new Set();
 
   // manyOne.Getter
@@ -91,23 +90,19 @@ export class NamedEntity extends SourcedEntity {
     newParentPackage.getChildNamedEntities().add(this);
   }
 
-
   public getMSE(): string {
-    const mse: FamixMseExporter = new FamixMseExporter("FAMIX.NamedEntity", this);
+    const mse: FamixMseExporter = new FamixMseExporter('FAMIX.NamedEntity', this);
     this.addPropertiesToExporter(mse);
     return mse.getMSE();
   }
 
   public addPropertiesToExporter(exporter: FamixMseExporter) {
     super.addPropertiesToExporter(exporter);
-    exporter.addProperty("isStub", this.getIsStub());
-    exporter.addProperty("receivingInvocations", this.getReceivingInvocations());
-    exporter.addProperty("name", this.getName());
-    exporter.addProperty("modifiers", this.getModifiers());
-    exporter.addProperty("annotationInstances", this.getAnnotationInstances());
-    exporter.addProperty("parentPackage", this.getParentPackage());
-
+    exporter.addProperty('isStub', this.getIsStub());
+    exporter.addProperty('receivingInvocations', this.getReceivingInvocations());
+    exporter.addProperty('name', this.getName());
+    exporter.addProperty('modifiers', this.getModifiers());
+    exporter.addProperty('annotationInstances', this.getAnnotationInstances());
+    exporter.addProperty('parentPackage', this.getParentPackage());
   }
-
 }
-

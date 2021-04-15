@@ -1,11 +1,10 @@
 // automatically generated code, please do not change
 
-import {FamixMseExporter} from "../../famix_mse_exporter";
-import {Attribute} from "./attribute";
-import {AnnotationInstanceAttribute} from "./annotation_instance_attribute";
+import { FamixMseExporter } from '../../famix_mse_exporter';
+import { Attribute } from './attribute';
+import { AnnotationInstanceAttribute } from './annotation_instance_attribute';
 
 export class AnnotationTypeAttribute extends Attribute {
-
   private annotationTypeAttributeAnnotationAttributeInstances: Set<AnnotationInstanceAttribute> = new Set();
 
   // manyOne.Getter
@@ -15,25 +14,25 @@ export class AnnotationTypeAttribute extends Attribute {
   }
 
   // manyOne.Setter
-  public addAnnotationAttributeInstances(annotationTypeAttributeAnnotationAttributeInstances: AnnotationInstanceAttribute) {
-    if (!this.annotationTypeAttributeAnnotationAttributeInstances.has(annotationTypeAttributeAnnotationAttributeInstances)) {
+  public addAnnotationAttributeInstances(
+    annotationTypeAttributeAnnotationAttributeInstances: AnnotationInstanceAttribute,
+  ) {
+    if (
+      !this.annotationTypeAttributeAnnotationAttributeInstances.has(annotationTypeAttributeAnnotationAttributeInstances)
+    ) {
       this.annotationTypeAttributeAnnotationAttributeInstances.add(annotationTypeAttributeAnnotationAttributeInstances);
       annotationTypeAttributeAnnotationAttributeInstances.setAnnotationTypeAttribute(this);
     }
   }
 
-
   public getMSE(): string {
-    const mse: FamixMseExporter = new FamixMseExporter("FAMIX.AnnotationTypeAttribute", this);
+    const mse: FamixMseExporter = new FamixMseExporter('FAMIX.AnnotationTypeAttribute', this);
     this.addPropertiesToExporter(mse);
     return mse.getMSE();
   }
 
   public addPropertiesToExporter(exporter: FamixMseExporter) {
     super.addPropertiesToExporter(exporter);
-    exporter.addProperty("annotationAttributeInstances", this.getAnnotationAttributeInstances());
-
+    exporter.addProperty('annotationAttributeInstances', this.getAnnotationAttributeInstances());
   }
-
 }
-

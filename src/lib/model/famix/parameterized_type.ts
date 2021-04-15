@@ -1,11 +1,10 @@
 // automatically generated code, please do not change
 
-import {FamixMseExporter} from "../../famix_mse_exporter";
-import {Type} from "./type";
-import {ParameterizableClass} from "./parameterizable_class";
+import { FamixMseExporter } from '../../famix_mse_exporter';
+import { Type } from './type';
+import { ParameterizableClass } from './parameterizable_class';
 
 export class ParameterizedType extends Type {
-
   private parameterizedTypeParameterizableClass: ParameterizableClass;
 
   // oneMany.Getter
@@ -36,19 +35,15 @@ export class ParameterizedType extends Type {
     }
   }
 
-
   public getMSE(): string {
-    const mse: FamixMseExporter = new FamixMseExporter("FAMIX.ParameterizedType", this);
+    const mse: FamixMseExporter = new FamixMseExporter('FAMIX.ParameterizedType', this);
     this.addPropertiesToExporter(mse);
     return mse.getMSE();
   }
 
   public addPropertiesToExporter(exporter: FamixMseExporter) {
     super.addPropertiesToExporter(exporter);
-    exporter.addProperty("parameterizableClass", this.getParameterizableClass());
-    exporter.addProperty("arguments", this.getArguments());
-
+    exporter.addProperty('parameterizableClass', this.getParameterizableClass());
+    exporter.addProperty('arguments', this.getArguments());
   }
-
 }
-

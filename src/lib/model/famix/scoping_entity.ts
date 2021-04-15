@@ -1,11 +1,10 @@
 // automatically generated code, please do not change
 
-import {FamixMseExporter} from "../../famix_mse_exporter";
-import {GlobalVariable} from "./global_variable";
-import {ContainerEntity} from "./container_entity";
+import { FamixMseExporter } from '../../famix_mse_exporter';
+import { GlobalVariable } from './global_variable';
+import { ContainerEntity } from './container_entity';
 
 export class ScopingEntity extends ContainerEntity {
-
   private scopingEntityGlobalVariables: Set<GlobalVariable> = new Set();
 
   // manyOne.Getter
@@ -52,20 +51,16 @@ export class ScopingEntity extends ContainerEntity {
     }
   }
 
-
   public getMSE(): string {
-    const mse: FamixMseExporter = new FamixMseExporter("FAMIX.ScopingEntity", this);
+    const mse: FamixMseExporter = new FamixMseExporter('FAMIX.ScopingEntity', this);
     this.addPropertiesToExporter(mse);
     return mse.getMSE();
   }
 
   public addPropertiesToExporter(exporter: FamixMseExporter) {
     super.addPropertiesToExporter(exporter);
-    exporter.addProperty("globalVariables", this.getGlobalVariables());
-    exporter.addProperty("parentScope", this.getParentScope());
-    exporter.addProperty("childScopes", this.getChildScopes());
-
+    exporter.addProperty('globalVariables', this.getGlobalVariables());
+    exporter.addProperty('parentScope', this.getParentScope());
+    exporter.addProperty('childScopes', this.getChildScopes());
   }
-
 }
-

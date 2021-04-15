@@ -1,11 +1,10 @@
 // automatically generated code, please do not change
 
-import {FamixMseExporter} from "../../famix_mse_exporter";
-import {StructuralEntity} from "./structural_entity";
-import {Invocation} from "./invocation";
+import { FamixMseExporter } from '../../famix_mse_exporter';
+import { StructuralEntity } from './structural_entity';
+import { Invocation } from './invocation';
 
 export class DereferencedInvocation extends Invocation {
-
   private dereferencedInvocationReferencer: StructuralEntity;
 
   // oneMany.Getter
@@ -20,18 +19,14 @@ export class DereferencedInvocation extends Invocation {
     newReferencer.getDereferencedInvocations().add(this);
   }
 
-
   public getMSE(): string {
-    const mse: FamixMseExporter = new FamixMseExporter("FAMIX.DereferencedInvocation", this);
+    const mse: FamixMseExporter = new FamixMseExporter('FAMIX.DereferencedInvocation', this);
     this.addPropertiesToExporter(mse);
     return mse.getMSE();
   }
 
   public addPropertiesToExporter(exporter: FamixMseExporter) {
     super.addPropertiesToExporter(exporter);
-    exporter.addProperty("referencer", this.getReferencer());
-
+    exporter.addProperty('referencer', this.getReferencer());
   }
-
 }
-

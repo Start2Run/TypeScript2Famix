@@ -1,18 +1,17 @@
 // automatically generated code, please do not change
 
-import {FamixMseExporter} from "../../famix_mse_exporter";
-import {StructuralEntity} from "./structural_entity";
-import {ParameterizedType} from "./parameterized_type";
-import {BehaviouralEntity} from "./behavioural_entity";
-import {ContainerEntity} from "./container_entity";
-import {Attribute} from "./attribute";
-import {Reference} from "./reference";
-import {Inheritance} from "./inheritance";
-import {TypeAlias} from "./type_alias";
-import {Method} from "./method";
+import { FamixMseExporter } from '../../famix_mse_exporter';
+import { StructuralEntity } from './structural_entity';
+import { ParameterizedType } from './parameterized_type';
+import { BehaviouralEntity } from './behavioural_entity';
+import { ContainerEntity } from './container_entity';
+import { Attribute } from './attribute';
+import { Reference } from './reference';
+import { Inheritance } from './inheritance';
+import { TypeAlias } from './type_alias';
+import { Method } from './method';
 
 export class Type extends ContainerEntity {
-
   private typeContainer: ContainerEntity;
 
   // oneMany.Getter
@@ -171,27 +170,23 @@ export class Type extends ContainerEntity {
     }
   }
 
-
   public getMSE(): string {
-    const mse: FamixMseExporter = new FamixMseExporter("FAMIX.Type", this);
+    const mse: FamixMseExporter = new FamixMseExporter('FAMIX.Type', this);
     this.addPropertiesToExporter(mse);
     return mse.getMSE();
   }
 
   public addPropertiesToExporter(exporter: FamixMseExporter) {
     super.addPropertiesToExporter(exporter);
-    exporter.addProperty("container", this.getContainer());
-    exporter.addProperty("typeAliases", this.getTypeAliases());
-    exporter.addProperty("superInheritances", this.getSuperInheritances());
-    exporter.addProperty("subInheritances", this.getSubInheritances());
-    exporter.addProperty("behavioursWithDeclaredType", this.getBehavioursWithDeclaredType());
-    exporter.addProperty("structuresWithDeclaredType", this.getStructuresWithDeclaredType());
-    exporter.addProperty("methods", this.getMethods());
-    exporter.addProperty("attributes", this.getAttributes());
-    exporter.addProperty("argumentsInParameterizedTypes", this.getArgumentsInParameterizedTypes());
-    exporter.addProperty("incomingReferences", this.getIncomingReferences());
-
+    exporter.addProperty('container', this.getContainer());
+    exporter.addProperty('typeAliases', this.getTypeAliases());
+    exporter.addProperty('superInheritances', this.getSuperInheritances());
+    exporter.addProperty('subInheritances', this.getSubInheritances());
+    exporter.addProperty('behavioursWithDeclaredType', this.getBehavioursWithDeclaredType());
+    exporter.addProperty('structuresWithDeclaredType', this.getStructuresWithDeclaredType());
+    exporter.addProperty('methods', this.getMethods());
+    exporter.addProperty('attributes', this.getAttributes());
+    exporter.addProperty('argumentsInParameterizedTypes', this.getArgumentsInParameterizedTypes());
+    exporter.addProperty('incomingReferences', this.getIncomingReferences());
   }
-
 }
-

@@ -1,19 +1,35 @@
 {
   "name": "typescript2famix",
   "version": "1.0.0",
-  "description": "",
-  "main": "sample.js",
+  "description": "A typescript to famix parser",
+  "main": "out/sample.js",
+  "types": "out/sample.d.ts",
   "scripts": {
-    "start": "node ./src/sample.ts"
+    "start": "node ./src/sample.ts",
+    "build": "tsc",
+    "format": "prettier --write \"src/**/*.ts\" \"out/**/*.js\"",
+    "lint": "tslint -p tsconfig.json"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["Typescript","Famix"],
+  "author": "Start2Run",
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^14.14.22",
-    "ts-morph": "^9.1.0"
+    "prettier": "^2.2.1",
+    "ts-morph": "^9.1.0",
+    "tslint": "^6.1.3",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^4.2.4"
   },
   "dependencies": {
     "@ts-morph/bootstrap": "^0.8.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Start2Run/TypeScript2Famix.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Start2Run/TypeScript2Famix/issues"
+  },
+  "homepage": "https://github.com/Start2Run/TypeScript2Famix#readme"
 }

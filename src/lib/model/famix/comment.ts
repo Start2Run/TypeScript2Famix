@@ -1,10 +1,9 @@
 // automatically generated code, please do not change
 
-import {FamixMseExporter} from "../../famix_mse_exporter";
-import {SourcedEntity} from "./sourced_entity";
+import { FamixMseExporter } from '../../famix_mse_exporter';
+import { SourcedEntity } from './sourced_entity';
 
 export class Comment extends SourcedEntity {
-
   private commentContainer: SourcedEntity;
 
   // oneMany.Getter
@@ -30,19 +29,15 @@ export class Comment extends SourcedEntity {
     this.commentContent = commentContent;
   }
 
-
   public getMSE(): string {
-    const mse: FamixMseExporter = new FamixMseExporter("FAMIX.Comment", this);
+    const mse: FamixMseExporter = new FamixMseExporter('FAMIX.Comment', this);
     this.addPropertiesToExporter(mse);
     return mse.getMSE();
   }
 
   public addPropertiesToExporter(exporter: FamixMseExporter) {
     super.addPropertiesToExporter(exporter);
-    exporter.addProperty("container", this.getContainer());
-    exporter.addProperty("content", this.getContent());
-
+    exporter.addProperty('container', this.getContainer());
+    exporter.addProperty('content', this.getContent());
   }
-
 }
-

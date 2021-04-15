@@ -1,13 +1,12 @@
 // automatically generated code, please do not change
 
-import {FamixMseExporter} from "../../famix_mse_exporter";
-import {SourceLanguage} from "./source_language";
-import {Entity} from "./entity";
-import {Comment} from "./comment";
-import {SourceAnchor} from "./source_anchor";
+import { FamixMseExporter } from '../../famix_mse_exporter';
+import { SourceLanguage } from './source_language';
+import { Entity } from './entity';
+import { Comment } from './comment';
+import { SourceAnchor } from './source_anchor';
 
 export class SourcedEntity extends Entity {
-
   private sourcedEntitySourceAnchor: SourceAnchor;
 
   // @FameProperty(name = "sourceAnchor", opposite = "element")
@@ -52,20 +51,16 @@ export class SourcedEntity extends Entity {
     newDeclaredSourceLanguage.getSourcedEntities().add(this);
   }
 
-
   public getMSE(): string {
-    const mse: FamixMseExporter = new FamixMseExporter("FAMIX.SourcedEntity", this);
+    const mse: FamixMseExporter = new FamixMseExporter('FAMIX.SourcedEntity', this);
     this.addPropertiesToExporter(mse);
     return mse.getMSE();
   }
 
   public addPropertiesToExporter(exporter: FamixMseExporter) {
     super.addPropertiesToExporter(exporter);
-    exporter.addProperty("sourceAnchor", this.getSourceAnchor());
-    exporter.addProperty("comments", this.getComments());
-    exporter.addProperty("declaredSourceLanguage", this.getDeclaredSourceLanguage());
-
+    exporter.addProperty('sourceAnchor', this.getSourceAnchor());
+    exporter.addProperty('comments', this.getComments());
+    exporter.addProperty('declaredSourceLanguage', this.getDeclaredSourceLanguage());
   }
-
 }
-

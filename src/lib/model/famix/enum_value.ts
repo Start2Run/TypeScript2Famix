@@ -1,11 +1,10 @@
 // automatically generated code, please do not change
 
-import {FamixMseExporter} from "../../famix_mse_exporter";
-import {StructuralEntity} from "./structural_entity";
-import {Enum} from "./enum";
+import { FamixMseExporter } from '../../famix_mse_exporter';
+import { StructuralEntity } from './structural_entity';
+import { Enum } from './enum';
 
 export class EnumValue extends StructuralEntity {
-
   private enumValueParentEnum: Enum;
 
   // oneMany.Getter
@@ -20,18 +19,14 @@ export class EnumValue extends StructuralEntity {
     newParentEnum.getValues().add(this);
   }
 
-
   public getMSE(): string {
-    const mse: FamixMseExporter = new FamixMseExporter("FAMIX.EnumValue", this);
+    const mse: FamixMseExporter = new FamixMseExporter('FAMIX.EnumValue', this);
     this.addPropertiesToExporter(mse);
     return mse.getMSE();
   }
 
   public addPropertiesToExporter(exporter: FamixMseExporter) {
     super.addPropertiesToExporter(exporter);
-    exporter.addProperty("parentEnum", this.getParentEnum());
-
+    exporter.addProperty('parentEnum', this.getParentEnum());
   }
-
 }
-

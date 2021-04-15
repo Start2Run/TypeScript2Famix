@@ -1,10 +1,9 @@
 // automatically generated code, please do not change
 
-import {FamixMseExporter} from "../../famix_mse_exporter";
-import {Type} from "./type";
+import { FamixMseExporter } from '../../famix_mse_exporter';
+import { Type } from './type';
 
 export class Class extends Type {
-
   private classIsTestCase: boolean;
 
   // @FameProperty(name = "isTestCase")
@@ -27,19 +26,15 @@ export class Class extends Type {
     this.classIsInterface = classIsInterface;
   }
 
-
   public getMSE(): string {
-    const mse: FamixMseExporter = new FamixMseExporter("FAMIX.Class", this);
+    const mse: FamixMseExporter = new FamixMseExporter('FAMIX.Class', this);
     this.addPropertiesToExporter(mse);
     return mse.getMSE();
   }
 
   public addPropertiesToExporter(exporter: FamixMseExporter) {
     super.addPropertiesToExporter(exporter);
-    exporter.addProperty("isTestCase", this.getIsTestCase());
-    exporter.addProperty("isInterface", this.getIsInterface());
-
+    exporter.addProperty('isTestCase', this.getIsTestCase());
+    exporter.addProperty('isInterface', this.getIsInterface());
   }
-
 }
-

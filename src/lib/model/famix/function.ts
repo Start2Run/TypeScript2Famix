@@ -1,12 +1,11 @@
 // automatically generated code, please do not change
 
-import {FamixMseExporter} from "../../famix_mse_exporter";
-import {BehaviouralEntity} from "./behavioural_entity";
-import {ContainerEntity} from "./container_entity";
-import {Module} from "./module";
+import { FamixMseExporter } from '../../famix_mse_exporter';
+import { BehaviouralEntity } from './behavioural_entity';
+import { ContainerEntity } from './container_entity';
+import { Module } from './module';
 
 export class Function extends BehaviouralEntity {
-
   private functionContainer: ContainerEntity;
 
   // oneMany.Getter
@@ -32,19 +31,15 @@ export class Function extends BehaviouralEntity {
     this.functionParentModule = functionParentModule;
   }
 
-
   public getMSE(): string {
-    const mse: FamixMseExporter = new FamixMseExporter("FAMIX.Function", this);
+    const mse: FamixMseExporter = new FamixMseExporter('FAMIX.Function', this);
     this.addPropertiesToExporter(mse);
     return mse.getMSE();
   }
 
   public addPropertiesToExporter(exporter: FamixMseExporter) {
     super.addPropertiesToExporter(exporter);
-    exporter.addProperty("container", this.getContainer());
-    exporter.addProperty("parentModule", this.getParentModule());
-
+    exporter.addProperty('container', this.getContainer());
+    exporter.addProperty('parentModule', this.getParentModule());
   }
-
 }
-

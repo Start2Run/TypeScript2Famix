@@ -1,14 +1,13 @@
 // automatically generated code, please do not change
 
-import {FamixMseExporter} from "../../famix_mse_exporter";
-import {CaughtException} from "./caught_exception";
-import {DeclaredException} from "./declared_exception";
-import {Type} from "./type";
-import {BehaviouralEntity} from "./behavioural_entity";
-import {ThrownException} from "./thrown_exception";
+import { FamixMseExporter } from '../../famix_mse_exporter';
+import { CaughtException } from './caught_exception';
+import { DeclaredException } from './declared_exception';
+import { Type } from './type';
+import { BehaviouralEntity } from './behavioural_entity';
+import { ThrownException } from './thrown_exception';
 
 export class Method extends BehaviouralEntity {
-
   private methodKind: string;
 
   // @FameProperty(name = "kind")
@@ -115,25 +114,21 @@ export class Method extends BehaviouralEntity {
     this.methodCategory = methodCategory;
   }
 
-
   public getMSE(): string {
-    const mse: FamixMseExporter = new FamixMseExporter("FAMIX.Method", this);
+    const mse: FamixMseExporter = new FamixMseExporter('FAMIX.Method', this);
     this.addPropertiesToExporter(mse);
     return mse.getMSE();
   }
 
   public addPropertiesToExporter(exporter: FamixMseExporter) {
     super.addPropertiesToExporter(exporter);
-    exporter.addProperty("timeStamp", this.getTimeStamp());
-    exporter.addProperty("kind", this.getKind());
-    exporter.addProperty("thrownExceptions", this.getThrownExceptions());
-    exporter.addProperty("caughtExceptions", this.getCaughtExceptions());
-    exporter.addProperty("declaredExceptions", this.getDeclaredExceptions());
-    exporter.addProperty("hasClassScope", this.getHasClassScope());
-    exporter.addProperty("category", this.getCategory());
-    exporter.addProperty("parentType", this.getParentType());
-
+    exporter.addProperty('timeStamp', this.getTimeStamp());
+    exporter.addProperty('kind', this.getKind());
+    exporter.addProperty('thrownExceptions', this.getThrownExceptions());
+    exporter.addProperty('caughtExceptions', this.getCaughtExceptions());
+    exporter.addProperty('declaredExceptions', this.getDeclaredExceptions());
+    exporter.addProperty('hasClassScope', this.getHasClassScope());
+    exporter.addProperty('category', this.getCategory());
+    exporter.addProperty('parentType', this.getParentType());
   }
-
 }
-

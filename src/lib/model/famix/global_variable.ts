@@ -1,12 +1,11 @@
 // automatically generated code, please do not change
 
-import {FamixMseExporter} from "../../famix_mse_exporter";
-import {StructuralEntity} from "./structural_entity";
-import {ScopingEntity} from "./scoping_entity";
-import {Module} from "./module";
+import { FamixMseExporter } from '../../famix_mse_exporter';
+import { StructuralEntity } from './structural_entity';
+import { ScopingEntity } from './scoping_entity';
+import { Module } from './module';
 
 export class GlobalVariable extends StructuralEntity {
-
   private globalVariableParentScope: ScopingEntity;
 
   // oneMany.Getter
@@ -32,19 +31,15 @@ export class GlobalVariable extends StructuralEntity {
     this.globalVariableParentModule = globalVariableParentModule;
   }
 
-
   public getMSE(): string {
-    const mse: FamixMseExporter = new FamixMseExporter("FAMIX.GlobalVariable", this);
+    const mse: FamixMseExporter = new FamixMseExporter('FAMIX.GlobalVariable', this);
     this.addPropertiesToExporter(mse);
     return mse.getMSE();
   }
 
   public addPropertiesToExporter(exporter: FamixMseExporter) {
     super.addPropertiesToExporter(exporter);
-    exporter.addProperty("parentScope", this.getParentScope());
-    exporter.addProperty("parentModule", this.getParentModule());
-
+    exporter.addProperty('parentScope', this.getParentScope());
+    exporter.addProperty('parentModule', this.getParentModule());
   }
-
 }
-

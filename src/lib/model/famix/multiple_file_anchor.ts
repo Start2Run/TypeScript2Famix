@@ -1,11 +1,10 @@
 // automatically generated code, please do not change
 
-import {FamixMseExporter} from "../../famix_mse_exporter";
-import {FileAnchor} from "./file_anchor";
-import {SourceAnchor} from "./source_anchor";
+import { FamixMseExporter } from '../../famix_mse_exporter';
+import { FileAnchor } from './file_anchor';
+import { SourceAnchor } from './source_anchor';
 
 export class MultipleFileAnchor extends SourceAnchor {
-
   private multipleFileAnchorAllFiles: Set<FileAnchor> = new Set();
 
   // @FameProperty(name = "allFiles")
@@ -21,18 +20,14 @@ export class MultipleFileAnchor extends SourceAnchor {
     }
   }
 
-
   public getMSE(): string {
-    const mse: FamixMseExporter = new FamixMseExporter("FAMIX.MultipleFileAnchor", this);
+    const mse: FamixMseExporter = new FamixMseExporter('FAMIX.MultipleFileAnchor', this);
     this.addPropertiesToExporter(mse);
     return mse.getMSE();
   }
 
   public addPropertiesToExporter(exporter: FamixMseExporter) {
     super.addPropertiesToExporter(exporter);
-    exporter.addProperty("allFiles", this.getAllFiles());
-
+    exporter.addProperty('allFiles', this.getAllFiles());
   }
-
 }
-

@@ -1,10 +1,9 @@
 // automatically generated code, please do not change
 
-import {FamixMseExporter} from "../../famix_mse_exporter";
-import {SourceLanguage} from "./source_language";
+import { FamixMseExporter } from '../../famix_mse_exporter';
+import { SourceLanguage } from './source_language';
 
 export class CustomSourceLanguage extends SourceLanguage {
-
   private customSourceLanguageName: string;
 
   // @FameProperty(name = "name")
@@ -16,18 +15,14 @@ export class CustomSourceLanguage extends SourceLanguage {
     this.customSourceLanguageName = customSourceLanguageName;
   }
 
-
   public getMSE(): string {
-    const mse: FamixMseExporter = new FamixMseExporter("FAMIX.CustomSourceLanguage", this);
+    const mse: FamixMseExporter = new FamixMseExporter('FAMIX.CustomSourceLanguage', this);
     this.addPropertiesToExporter(mse);
     return mse.getMSE();
   }
 
   public addPropertiesToExporter(exporter: FamixMseExporter) {
     super.addPropertiesToExporter(exporter);
-    exporter.addProperty("name", this.getName());
-
+    exporter.addProperty('name', this.getName());
   }
-
 }
-

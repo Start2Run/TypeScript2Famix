@@ -1,12 +1,11 @@
 // automatically generated code, please do not change
 
-import {FamixMseExporter} from "../../famix_mse_exporter";
-import {Entity} from "./entity";
-import {AnnotationTypeAttribute} from "./annotation_type_attribute";
-import {AnnotationInstance} from "./annotation_instance";
+import { FamixMseExporter } from '../../famix_mse_exporter';
+import { Entity } from './entity';
+import { AnnotationTypeAttribute } from './annotation_type_attribute';
+import { AnnotationInstance } from './annotation_instance';
 
 export class AnnotationInstanceAttribute extends Entity {
-
   private annotationInstanceAttributeAnnotationTypeAttribute: AnnotationTypeAttribute;
 
   // oneMany.Getter
@@ -46,20 +45,16 @@ export class AnnotationInstanceAttribute extends Entity {
     this.annotationInstanceAttributeValue = annotationInstanceAttributeValue;
   }
 
-
   public getMSE(): string {
-    const mse: FamixMseExporter = new FamixMseExporter("FAMIX.AnnotationInstanceAttribute", this);
+    const mse: FamixMseExporter = new FamixMseExporter('FAMIX.AnnotationInstanceAttribute', this);
     this.addPropertiesToExporter(mse);
     return mse.getMSE();
   }
 
   public addPropertiesToExporter(exporter: FamixMseExporter) {
     super.addPropertiesToExporter(exporter);
-    exporter.addProperty("annotationTypeAttribute", this.getAnnotationTypeAttribute());
-    exporter.addProperty("parentAnnotationInstance", this.getParentAnnotationInstance());
-    exporter.addProperty("value", this.getValue());
-
+    exporter.addProperty('annotationTypeAttribute', this.getAnnotationTypeAttribute());
+    exporter.addProperty('parentAnnotationInstance', this.getParentAnnotationInstance());
+    exporter.addProperty('value', this.getValue());
   }
-
 }
-

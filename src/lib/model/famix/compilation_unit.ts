@@ -1,11 +1,10 @@
 // automatically generated code, please do not change
 
-import {FamixMseExporter} from "../../famix_mse_exporter";
-import {Module} from "./module";
-import {File} from "../file/file";
+import { FamixMseExporter } from '../../famix_mse_exporter';
+import { Module } from './module';
+import { File } from '../file/file';
 
 export class CompilationUnit extends File {
-
   private compilationUnitModule: Module;
 
   // @FameProperty(name = "module", opposite = "compilationUnit")
@@ -20,18 +19,14 @@ export class CompilationUnit extends File {
     }
   }
 
-
   public getMSE(): string {
-    const mse: FamixMseExporter = new FamixMseExporter("FAMIX.CompilationUnit", this);
+    const mse: FamixMseExporter = new FamixMseExporter('FAMIX.CompilationUnit', this);
     this.addPropertiesToExporter(mse);
     return mse.getMSE();
   }
 
   public addPropertiesToExporter(exporter: FamixMseExporter) {
     super.addPropertiesToExporter(exporter);
-    exporter.addProperty("module", this.getModule());
-
+    exporter.addProperty('module', this.getModule());
   }
-
 }
-

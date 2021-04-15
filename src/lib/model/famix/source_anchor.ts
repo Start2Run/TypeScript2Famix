@@ -1,11 +1,10 @@
 // automatically generated code, please do not change
 
-import {FamixMseExporter} from "../../famix_mse_exporter";
-import {Entity} from "./entity";
-import {SourcedEntity} from "./sourced_entity";
+import { FamixMseExporter } from '../../famix_mse_exporter';
+import { Entity } from './entity';
+import { SourcedEntity } from './sourced_entity';
 
 export class SourceAnchor extends Entity {
-
   private sourceAnchorElement: SourcedEntity;
 
   // @FameProperty(name = "element", opposite = "sourceAnchor")
@@ -20,18 +19,14 @@ export class SourceAnchor extends Entity {
     }
   }
 
-
   public getMSE(): string {
-    const mse: FamixMseExporter = new FamixMseExporter("FAMIX.SourceAnchor", this);
+    const mse: FamixMseExporter = new FamixMseExporter('FAMIX.SourceAnchor', this);
     this.addPropertiesToExporter(mse);
     return mse.getMSE();
   }
 
   public addPropertiesToExporter(exporter: FamixMseExporter) {
     super.addPropertiesToExporter(exporter);
-    exporter.addProperty("element", this.getElement());
-
+    exporter.addProperty('element', this.getElement());
   }
-
 }
-

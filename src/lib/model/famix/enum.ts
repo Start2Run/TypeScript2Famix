@@ -1,11 +1,10 @@
 // automatically generated code, please do not change
 
-import {FamixMseExporter} from "../../famix_mse_exporter";
-import {Type} from "./type";
-import {EnumValue} from "./enum_value";
+import { FamixMseExporter } from '../../famix_mse_exporter';
+import { Type } from './type';
+import { EnumValue } from './enum_value';
 
 export class Enum extends Type {
-
   private enumValues: Set<EnumValue> = new Set();
 
   // manyOne.Getter
@@ -22,18 +21,14 @@ export class Enum extends Type {
     }
   }
 
-
   public getMSE(): string {
-    const mse: FamixMseExporter = new FamixMseExporter("FAMIX.Enum", this);
+    const mse: FamixMseExporter = new FamixMseExporter('FAMIX.Enum', this);
     this.addPropertiesToExporter(mse);
     return mse.getMSE();
   }
 
   public addPropertiesToExporter(exporter: FamixMseExporter) {
     super.addPropertiesToExporter(exporter);
-    exporter.addProperty("values", this.getValues());
-
+    exporter.addProperty('values', this.getValues());
   }
-
 }
-

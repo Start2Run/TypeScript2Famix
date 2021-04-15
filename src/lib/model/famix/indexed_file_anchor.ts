@@ -1,10 +1,9 @@
 // automatically generated code, please do not change
 
-import {FamixMseExporter} from "../../famix_mse_exporter";
-import {AbstractFileAnchor} from "./abstract_file_anchor";
+import { FamixMseExporter } from '../../famix_mse_exporter';
+import { AbstractFileAnchor } from './abstract_file_anchor';
 
 export class IndexedFileAnchor extends AbstractFileAnchor {
-
   private indexedFileAnchorStartPos: number;
 
   // @FameProperty(name = "startPos")
@@ -27,19 +26,15 @@ export class IndexedFileAnchor extends AbstractFileAnchor {
     this.indexedFileAnchorEndPos = indexedFileAnchorEndPos;
   }
 
-
   public getMSE(): string {
-    const mse: FamixMseExporter = new FamixMseExporter("FAMIX.IndexedFileAnchor", this);
+    const mse: FamixMseExporter = new FamixMseExporter('FAMIX.IndexedFileAnchor', this);
     this.addPropertiesToExporter(mse);
     return mse.getMSE();
   }
 
   public addPropertiesToExporter(exporter: FamixMseExporter) {
     super.addPropertiesToExporter(exporter);
-    exporter.addProperty("startPos", this.getStartPos());
-    exporter.addProperty("endPos", this.getEndPos());
-
+    exporter.addProperty('startPos', this.getStartPos());
+    exporter.addProperty('endPos', this.getEndPos());
   }
-
 }
-

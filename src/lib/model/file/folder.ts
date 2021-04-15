@@ -1,10 +1,9 @@
 // automatically generated code, please do not change
 
-import {FamixMseExporter} from "../../famix_mse_exporter";
-import {AbstractFile} from "./abstract_file";
+import { FamixMseExporter } from '../../famix_mse_exporter';
+import { AbstractFile } from './abstract_file';
 
 export class Folder extends AbstractFile {
-
   private folderNumberOfFiles: number;
 
   // @FameProperty(name = "numberOfFiles")
@@ -60,22 +59,18 @@ export class Folder extends AbstractFile {
     this.folderNumberOfEmptyLinesOfText = folderNumberOfEmptyLinesOfText;
   }
 
-
   public getMSE(): string {
-    const mse: FamixMseExporter = new FamixMseExporter("FILE.Folder", this);
+    const mse: FamixMseExporter = new FamixMseExporter('FILE.Folder', this);
     this.addPropertiesToExporter(mse);
     return mse.getMSE();
   }
 
   public addPropertiesToExporter(exporter: FamixMseExporter) {
     super.addPropertiesToExporter(exporter);
-    exporter.addProperty("numberOfFiles", this.getNumberOfFiles());
-    exporter.addProperty("numberOfFolders", this.getNumberOfFolders());
-    exporter.addProperty("totalNumberOfLinesOfText", this.getTotalNumberOfLinesOfText());
-    exporter.addProperty("numberOfLinesOfText", this.getNumberOfLinesOfText());
-    exporter.addProperty("numberOfEmptyLinesOfText", this.getNumberOfEmptyLinesOfText());
-
+    exporter.addProperty('numberOfFiles', this.getNumberOfFiles());
+    exporter.addProperty('numberOfFolders', this.getNumberOfFolders());
+    exporter.addProperty('totalNumberOfLinesOfText', this.getTotalNumberOfLinesOfText());
+    exporter.addProperty('numberOfLinesOfText', this.getNumberOfLinesOfText());
+    exporter.addProperty('numberOfEmptyLinesOfText', this.getNumberOfEmptyLinesOfText());
   }
-
 }
-

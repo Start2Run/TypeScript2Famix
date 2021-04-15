@@ -1,11 +1,10 @@
 // automatically generated code, please do not change
 
-import {FamixMseExporter} from "../../famix_mse_exporter";
-import {NamedEntity} from "./named_entity";
-import {ScopingEntity} from "./scoping_entity";
+import { FamixMseExporter } from '../../famix_mse_exporter';
+import { NamedEntity } from './named_entity';
+import { ScopingEntity } from './scoping_entity';
 
 export class Package extends ScopingEntity {
-
   private packageNumberOfClientPackages: number;
 
   // @FameProperty(name = "numberOfClientPackages")
@@ -44,20 +43,16 @@ export class Package extends ScopingEntity {
     this.packageNumberOfMethods = packageNumberOfMethods;
   }
 
-
   public getMSE(): string {
-    const mse: FamixMseExporter = new FamixMseExporter("FAMIX.Package", this);
+    const mse: FamixMseExporter = new FamixMseExporter('FAMIX.Package', this);
     this.addPropertiesToExporter(mse);
     return mse.getMSE();
   }
 
   public addPropertiesToExporter(exporter: FamixMseExporter) {
     super.addPropertiesToExporter(exporter);
-    exporter.addProperty("numberOfClientPackages", this.getNumberOfClientPackages());
-    exporter.addProperty("numberOfMethods", this.getNumberOfMethods());
-    exporter.addProperty("childNamedEntities", this.getChildNamedEntities());
-
+    exporter.addProperty('numberOfClientPackages', this.getNumberOfClientPackages());
+    exporter.addProperty('numberOfMethods', this.getNumberOfMethods());
+    exporter.addProperty('childNamedEntities', this.getChildNamedEntities());
   }
-
 }
-

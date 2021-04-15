@@ -1,10 +1,9 @@
 // automatically generated code, please do not change
 
-import {FamixMseExporter} from "../../famix_mse_exporter";
-import {SourceAnchor} from "./source_anchor";
+import { FamixMseExporter } from '../../famix_mse_exporter';
+import { SourceAnchor } from './source_anchor';
 
 export class SourceTextAnchor extends SourceAnchor {
-
   private sourceTextAnchorSource: string;
 
   // @FameProperty(name = "source")
@@ -16,18 +15,14 @@ export class SourceTextAnchor extends SourceAnchor {
     this.sourceTextAnchorSource = sourceTextAnchorSource;
   }
 
-
   public getMSE(): string {
-    const mse: FamixMseExporter = new FamixMseExporter("FAMIX.SourceTextAnchor", this);
+    const mse: FamixMseExporter = new FamixMseExporter('FAMIX.SourceTextAnchor', this);
     this.addPropertiesToExporter(mse);
     return mse.getMSE();
   }
 
   public addPropertiesToExporter(exporter: FamixMseExporter) {
     super.addPropertiesToExporter(exporter);
-    exporter.addProperty("source", this.getSource());
-
+    exporter.addProperty('source', this.getSource());
   }
-
 }
-

@@ -1,17 +1,16 @@
 // automatically generated code, please do not change
 
-import {FamixMseExporter} from "../../famix_mse_exporter";
-import {Type} from "./type";
-import {ImplicitVariable} from "./implicit_variable";
-import {Invocation} from "./invocation";
-import {ContainerEntity} from "./container_entity";
-import {Reference} from "./reference";
-import {LocalVariable} from "./local_variable";
-import {Access} from "./access";
-import {Parameter} from "./parameter";
+import { FamixMseExporter } from '../../famix_mse_exporter';
+import { Type } from './type';
+import { ImplicitVariable } from './implicit_variable';
+import { Invocation } from './invocation';
+import { ContainerEntity } from './container_entity';
+import { Reference } from './reference';
+import { LocalVariable } from './local_variable';
+import { Access } from './access';
+import { Parameter } from './parameter';
 
 export class BehaviouralEntity extends ContainerEntity {
-
   private behaviouralEntitySignature: string;
 
   // @FameProperty(name = "signature")
@@ -215,32 +214,28 @@ export class BehaviouralEntity extends ContainerEntity {
     }
   }
 
-
   public getMSE(): string {
-    const mse: FamixMseExporter = new FamixMseExporter("FAMIX.BehaviouralEntity", this);
+    const mse: FamixMseExporter = new FamixMseExporter('FAMIX.BehaviouralEntity', this);
     this.addPropertiesToExporter(mse);
     return mse.getMSE();
   }
 
   public addPropertiesToExporter(exporter: FamixMseExporter) {
     super.addPropertiesToExporter(exporter);
-    exporter.addProperty("signature", this.getSignature());
-    exporter.addProperty("numberOfParameters", this.getNumberOfParameters());
-    exporter.addProperty("declaredType", this.getDeclaredType());
-    exporter.addProperty("cyclomaticComplexity", this.getCyclomaticComplexity());
-    exporter.addProperty("numberOfComments", this.getNumberOfComments());
-    exporter.addProperty("implicitVariables", this.getImplicitVariables());
-    exporter.addProperty("localVariables", this.getLocalVariables());
-    exporter.addProperty("numberOfStatements", this.getNumberOfStatements());
-    exporter.addProperty("outgoingReferences", this.getOutgoingReferences());
-    exporter.addProperty("numberOfLinesOfCode", this.getNumberOfLinesOfCode());
-    exporter.addProperty("outgoingInvocations", this.getOutgoingInvocations());
-    exporter.addProperty("incomingInvocations", this.getIncomingInvocations());
-    exporter.addProperty("numberOfConditionals", this.getNumberOfConditionals());
-    exporter.addProperty("accesses", this.getAccesses());
-    exporter.addProperty("parameters", this.getParameters());
-
+    exporter.addProperty('signature', this.getSignature());
+    exporter.addProperty('numberOfParameters', this.getNumberOfParameters());
+    exporter.addProperty('declaredType', this.getDeclaredType());
+    exporter.addProperty('cyclomaticComplexity', this.getCyclomaticComplexity());
+    exporter.addProperty('numberOfComments', this.getNumberOfComments());
+    exporter.addProperty('implicitVariables', this.getImplicitVariables());
+    exporter.addProperty('localVariables', this.getLocalVariables());
+    exporter.addProperty('numberOfStatements', this.getNumberOfStatements());
+    exporter.addProperty('outgoingReferences', this.getOutgoingReferences());
+    exporter.addProperty('numberOfLinesOfCode', this.getNumberOfLinesOfCode());
+    exporter.addProperty('outgoingInvocations', this.getOutgoingInvocations());
+    exporter.addProperty('incomingInvocations', this.getIncomingInvocations());
+    exporter.addProperty('numberOfConditionals', this.getNumberOfConditionals());
+    exporter.addProperty('accesses', this.getAccesses());
+    exporter.addProperty('parameters', this.getParameters());
   }
-
 }
-

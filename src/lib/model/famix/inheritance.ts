@@ -1,11 +1,10 @@
 // automatically generated code, please do not change
 
-import {FamixMseExporter} from "../../famix_mse_exporter";
-import {Type} from "./type";
-import {Association} from "./association";
+import { FamixMseExporter } from '../../famix_mse_exporter';
+import { Type } from './type';
+import { Association } from './association';
 
 export class Inheritance extends Association {
-
   private inheritanceSuperclass: Type;
 
   // oneMany.Getter
@@ -34,19 +33,15 @@ export class Inheritance extends Association {
     newSubclass.getSuperInheritances().add(this);
   }
 
-
   public getMSE(): string {
-    const mse: FamixMseExporter = new FamixMseExporter("FAMIX.Inheritance", this);
+    const mse: FamixMseExporter = new FamixMseExporter('FAMIX.Inheritance', this);
     this.addPropertiesToExporter(mse);
     return mse.getMSE();
   }
 
   public addPropertiesToExporter(exporter: FamixMseExporter) {
     super.addPropertiesToExporter(exporter);
-    exporter.addProperty("superclass", this.getSuperclass());
-    exporter.addProperty("subclass", this.getSubclass());
-
+    exporter.addProperty('superclass', this.getSuperclass());
+    exporter.addProperty('subclass', this.getSubclass());
   }
-
 }
-

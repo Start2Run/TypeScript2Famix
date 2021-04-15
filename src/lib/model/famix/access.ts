@@ -1,12 +1,11 @@
 // automatically generated code, please do not change
 
-import {FamixMseExporter} from "../../famix_mse_exporter";
-import {StructuralEntity} from "./structural_entity";
-import {Association} from "./association";
-import {BehaviouralEntity} from "./behavioural_entity";
+import { FamixMseExporter } from '../../famix_mse_exporter';
+import { StructuralEntity } from './structural_entity';
+import { Association } from './association';
+import { BehaviouralEntity } from './behavioural_entity';
 
 export class Access extends Association {
-
   private accessAccessor: BehaviouralEntity;
 
   // oneMany.Getter
@@ -46,20 +45,16 @@ export class Access extends Association {
     this.accessIsWrite = accessIsWrite;
   }
 
-
   public getMSE(): string {
-    const mse: FamixMseExporter = new FamixMseExporter("FAMIX.Access", this);
+    const mse: FamixMseExporter = new FamixMseExporter('FAMIX.Access', this);
     this.addPropertiesToExporter(mse);
     return mse.getMSE();
   }
 
   public addPropertiesToExporter(exporter: FamixMseExporter) {
     super.addPropertiesToExporter(exporter);
-    exporter.addProperty("accessor", this.getAccessor());
-    exporter.addProperty("variable", this.getVariable());
-    exporter.addProperty("isWrite", this.getIsWrite());
-
+    exporter.addProperty('accessor', this.getAccessor());
+    exporter.addProperty('variable', this.getVariable());
+    exporter.addProperty('isWrite', this.getIsWrite());
   }
-
 }
-

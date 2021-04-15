@@ -1,10 +1,9 @@
 // automatically generated code, please do not change
 
-import {FamixMseExporter} from "../../famix_mse_exporter";
-import {AbstractFile} from "./abstract_file";
+import { FamixMseExporter } from '../../famix_mse_exporter';
+import { AbstractFile } from './abstract_file';
 
 export class File extends AbstractFile {
-
   private fileNumberOfInternalClones: number;
 
   // @FameProperty(name = "numberOfInternalClones")
@@ -126,28 +125,24 @@ export class File extends AbstractFile {
     this.fileNumberOfBytes = fileNumberOfBytes;
   }
 
-
   public getMSE(): string {
-    const mse: FamixMseExporter = new FamixMseExporter("FILE.File", this);
+    const mse: FamixMseExporter = new FamixMseExporter('FILE.File', this);
     this.addPropertiesToExporter(mse);
     return mse.getMSE();
   }
 
   public addPropertiesToExporter(exporter: FamixMseExporter) {
     super.addPropertiesToExporter(exporter);
-    exporter.addProperty("averageNumberOfCharactersPerLine", this.getAverageNumberOfCharactersPerLine());
-    exporter.addProperty("numberOfInternalClones", this.getNumberOfInternalClones());
-    exporter.addProperty("totalNumberOfLinesOfText", this.getTotalNumberOfLinesOfText());
-    exporter.addProperty("numberOfKiloBytes", this.getNumberOfKiloBytes());
-    exporter.addProperty("numberOfDuplicatedFiles", this.getNumberOfDuplicatedFiles());
-    exporter.addProperty("numberOfLinesOfText", this.getNumberOfLinesOfText());
-    exporter.addProperty("numberOfEmptyLinesOfText", this.getNumberOfEmptyLinesOfText());
-    exporter.addProperty("numberOfCharacters", this.getNumberOfCharacters());
-    exporter.addProperty("numberOfExternalClones", this.getNumberOfExternalClones());
-    exporter.addProperty("numberOfInternalMultiplications", this.getNumberOfInternalMultiplications());
-    exporter.addProperty("numberOfBytes", this.getNumberOfBytes());
-
+    exporter.addProperty('averageNumberOfCharactersPerLine', this.getAverageNumberOfCharactersPerLine());
+    exporter.addProperty('numberOfInternalClones', this.getNumberOfInternalClones());
+    exporter.addProperty('totalNumberOfLinesOfText', this.getTotalNumberOfLinesOfText());
+    exporter.addProperty('numberOfKiloBytes', this.getNumberOfKiloBytes());
+    exporter.addProperty('numberOfDuplicatedFiles', this.getNumberOfDuplicatedFiles());
+    exporter.addProperty('numberOfLinesOfText', this.getNumberOfLinesOfText());
+    exporter.addProperty('numberOfEmptyLinesOfText', this.getNumberOfEmptyLinesOfText());
+    exporter.addProperty('numberOfCharacters', this.getNumberOfCharacters());
+    exporter.addProperty('numberOfExternalClones', this.getNumberOfExternalClones());
+    exporter.addProperty('numberOfInternalMultiplications', this.getNumberOfInternalMultiplications());
+    exporter.addProperty('numberOfBytes', this.getNumberOfBytes());
   }
-
 }
-
