@@ -1,4 +1,4 @@
-// This code was copied and otained from : /https://github.com/anandundavia/ts-complex
+// This code was copied and otained from : https://github.com/anandundavia/ts-complex
 // Using the code directly because for some reason the npm package didn't work properly
 
 import { forEachChild, SyntaxKind, createSourceFile } from 'typescript';
