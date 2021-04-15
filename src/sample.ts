@@ -1,20 +1,20 @@
 import { Project } from 'ts-morph';
 const project = new Project();
 
-import { mseBuilder } from './mseBuilder';
+import { MseBuilder } from './MseBuilder';
 
 import * as fs from 'fs';
 
-if (process.argv.length != 3) {
+if (process.argv.length !== 3) {
   process.exit(-1);
 }
 
-var folderPath = process.argv[2];
+const folderPath = process.argv[2];
 
 try {
   const sourceFiles = project.addSourceFilesAtPaths(folderPath + '/**/*.ts');
 
-  var builder = new mseBuilder();
+  const builder = new MseBuilder();
 
   sourceFiles.forEach((file) => {
     builder.addFunctions(file.getFunctions(), file.getFilePath());
@@ -23,7 +23,7 @@ try {
 
   sourceFiles.forEach((file) => {
     // Load classes and interfaces without namespace
-    var filePath = file.getFilePath();
+    const filePath = file.getFilePath();
     file.getClasses().forEach((cls) => {
       builder.addClass(cls, filePath);
     });
@@ -32,7 +32,7 @@ try {
     });
 
     file.getNamespaces().forEach((namespace) => {
-      var fmxNamespace = builder.loadNamespace(namespace);
+      const fmxNamespace = builder.loadNamespace(namespace);
 
       // Load classes and interfaces inside a namespace
       namespace.getClasses().forEach((cls) => {
@@ -65,11 +65,12 @@ try {
     });
   });
 
-  var mse = builder.getMSE();
+  const mse = builder.getMSE();
 
   fs.writeFile('sample.mse', mse, (err) => {
     if (err) throw err;
   });
 } catch (Error) {
+ /* tslint:disable-next-line */
   console.log(Error.message);
 }

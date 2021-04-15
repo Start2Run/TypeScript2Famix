@@ -23,15 +23,18 @@ export class ContainerEntity extends NamedEntity {
     }
   }
 
+  /* tslint:disable-next-line */
   private containerEntityFunctions: Set<Function> = new Set();
 
   // manyOne.Getter
   // @FameProperty(name = "functions", opposite = "container", derived = true)
+  /* tslint:disable-next-line */
   public getFunctions(): Set<Function> {
     return this.containerEntityFunctions;
   }
 
   // manyOne.Setter
+  /* tslint:disable-next-line */
   public addFunctions(containerEntityFunctions: Function) {
     if (!this.containerEntityFunctions.has(containerEntityFunctions)) {
       this.containerEntityFunctions.add(containerEntityFunctions);

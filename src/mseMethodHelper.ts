@@ -1,12 +1,13 @@
 import { FamixRepository } from './lib/famix_repository';
 import { MethodDeclaration, Node, ParameterDeclaration, SyntaxKind } from 'ts-morph';
 import * as Famix from './lib/model/famix';
-import { mseFileAnchorHelper } from './mseFileAnchorHelper';
+import { MseFileAnchorHelper } from './mseFileAnchorHelper';
 import { Globals } from './Globals';
 
+/* tslint:disable-next-line */
 const cyclomatic = require('./cyclomatic');
 
-export class mseMethodHelper {
+export class MseMethodHelper {
   private _repository: FamixRepository;
   private _fmxGlobalNamespace: Famix.Namespace;
 
@@ -16,8 +17,8 @@ export class mseMethodHelper {
   }
 
   public addMethods(methodDeclarations: MethodDeclaration[], fmxClass: Famix.Class) {
-    var fileName = (fmxClass.getSourceAnchor() as Famix.IndexedFileAnchor).getFileName();
-    var cc = cyclomatic.calculate(fileName);
+    const fileName = (fmxClass.getSourceAnchor() as Famix.IndexedFileAnchor).getFileName();
+    const cc = cyclomatic.calculate(fileName);
     methodDeclarations.forEach((method) => {
       this.addMethod(method, fmxClass, cc, fileName, false);
     });
@@ -28,8 +29,8 @@ export class mseMethodHelper {
   }
 
   public addConstructors(methodDeclarations: MethodDeclaration[], fmxClass: Famix.Class) {
-    var fileName = (fmxClass.getSourceAnchor() as Famix.IndexedFileAnchor).getFileName();
-    var cc = cyclomatic.calculate(fileName);
+    const fileName = (fmxClass.getSourceAnchor() as Famix.IndexedFileAnchor).getFileName();
+    const cc = cyclomatic.calculate(fileName);
     methodDeclarations.forEach((method) => {
       this.addMethod(method, fmxClass, cc, fileName, true);
     });
@@ -42,7 +43,7 @@ export class mseMethodHelper {
     fileName: string,
     isConstructor: boolean,
   ) {
-    var fmxMethod = new Famix.Method(this._repository);
+    const fmxMethod = new Famix.Method(this._repository);
 
     if (isConstructor) {
       fmxMethod.setName(Globals.ConstructorType);
@@ -64,7 +65,7 @@ export class mseMethodHelper {
       fmxMethod.setCyclomaticComplexity(1);
     }
 
-    var indexedFileAnchor = mseFileAnchorHelper.createFileAnchor(
+    const indexedFileAnchor = MseFileAnchorHelper.createFileAnchor(
       this._repository,
       fileName,
       method.getStart(),
@@ -76,13 +77,13 @@ export class mseMethodHelper {
       try {
         fmxMethod.addModifiers(method.getScope());
       } catch (Error) {
-        console.log(Error.message);
+      //  console.log(Error.message);
       }
       fmxMethod.setNumberOfStatements(method.getStatements().length);
     }
     this.addParameters(method, fmxMethod);
-    var typeName = method.getReturnType()?.getSymbol()?.getEscapedName() ?? Globals.VoidType;
-    var fmxType = this.getFamixType(typeName);
+    const typeName = method.getReturnType()?.getSymbol()?.getEscapedName() ?? Globals.VoidType;
+    const fmxType = this.getFamixType(typeName);
     fmxMethod.setDeclaredType(fmxType);
   }
 
@@ -96,23 +97,23 @@ export class mseMethodHelper {
     referencedMethod: Famix.Method,
     fmxClass: Famix.Class,
   ): boolean {
-    var nodes = Array.from(node.getAncestors());
-    for (var i = 0; i < nodes.length; i++) {
-      var y = nodes[i] as any;
-      if (y.getKind() == SyntaxKind.Constructor || y.getKind() == SyntaxKind.MethodDeclaration) {
+    const nodes = Array.from(node.getAncestors());
+    for (const n of nodes) {
+      const y = n as any;
+      if (y.getKind() === SyntaxKind.Constructor || y.getKind() === SyntaxKind.MethodDeclaration) {
         referencingMethodName = this.getMethodNodeName(y);
       }
-      if (y.getKind() == SyntaxKind.ClassDeclaration) {
-        var invocationClass = this.getFamixClass(y.getName());
-        var fmxMethods = invocationClass.getMethods();
+      if (y.getKind() === SyntaxKind.ClassDeclaration) {
+        const invocationClass = this.getFamixClass(y.getName());
+        const fmxMethods = invocationClass.getMethods();
         let referencingMethod: Famix.Method;
         fmxMethods.forEach((m) => {
-          if (m.getName() == referencingMethodName) {
+          if (m.getName() === referencingMethodName) {
             referencingMethod = m;
           }
         });
-        if (referencingMethod != undefined) {
-          var newInvocation = new Famix.Invocation(this._repository);
+        if (referencingMethod !== undefined) {
+          const newInvocation = new Famix.Invocation(this._repository);
           newInvocation.addCandidates(referencedMethod);
           newInvocation.addCandidates(referencingMethod);
           newInvocation.setSender(referencingMethod);
@@ -129,15 +130,15 @@ export class mseMethodHelper {
   }
 
   private getMethodNodeName(node: any): string {
-    if (node.getKind() == SyntaxKind.Constructor) {
+    if (node.getKind() === SyntaxKind.Constructor) {
       return Globals.ConstructorType;
-    } else if (node.getKind() == SyntaxKind.MethodDeclaration) {
+    } else if (node.getKind() === SyntaxKind.MethodDeclaration) {
       return node.getName();
     }
   }
 
   private setSignature(method: MethodDeclaration, fmxMethod: Famix.Method) {
-    let signature =
+    const signature =
       method.getName() +
       '(' +
       method
@@ -156,23 +157,23 @@ export class mseMethodHelper {
   };
 
   private addParameter(parameter: ParameterDeclaration, fmxMethod: Famix.Method) {
-    var fmxParameter = new Famix.Parameter(this._repository);
+    const fmxParameter = new Famix.Parameter(this._repository);
     fmxParameter.setName(parameter.getName());
     fmxParameter.setParentBehaviouralEntity(fmxMethod);
-    var fmxFileAnchor = mseFileAnchorHelper.createFileAnchor(
+    const fmxFileAnchor = MseFileAnchorHelper.createFileAnchor(
       this._repository,
       (fmxMethod.getSourceAnchor() as Famix.IndexedFileAnchor).getFileName(),
       parameter.getStart(),
       parameter.getEnd(),
     );
     fmxFileAnchor.setElement(fmxParameter);
-    var typeName = parameter.getType()?.getSymbol()?.getEscapedName() ?? Globals.VoidType;
-    var fmxType = this.getFamixType(typeName);
+    const typeName = parameter.getType()?.getSymbol()?.getEscapedName() ?? Globals.VoidType;
+    const fmxType = this.getFamixType(typeName);
     fmxParameter.setDeclaredType(fmxType);
   }
 
   private getFamixType(name: string): Famix.Type {
-    var fmxClass = this._repository.getFamixClass(name);
+    let fmxClass = this._repository.getFamixClass(name);
     if (fmxClass != null) {
       return fmxClass;
     }

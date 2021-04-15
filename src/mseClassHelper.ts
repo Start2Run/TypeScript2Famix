@@ -1,10 +1,10 @@
 import './mseFileAnchorHelper';
 import { ClassDeclaration, InterfaceDeclaration } from 'ts-morph';
 import * as Famix from './lib/model/famix';
-import { mseFileAnchorHelper } from './mseFileAnchorHelper';
+import { MseFileAnchorHelper } from './mseFileAnchorHelper';
 import { FamixRepository } from './lib/famix_repository';
 
-export class mseClassHelper {
+export class MseClassHelper {
   private _repository: FamixRepository;
 
   constructor(repository: FamixRepository) {
@@ -12,13 +12,13 @@ export class mseClassHelper {
   }
 
   public loadClass(classDeclaration: ClassDeclaration, sourceFileName: string, fmxNameSpace: Famix.Namespace = null) {
-    var fmxFileAnchor = mseFileAnchorHelper.createFileAnchor(
+    const fmxFileAnchor = MseFileAnchorHelper.createFileAnchor(
       this._repository,
       sourceFileName,
       classDeclaration.getStart(),
       classDeclaration.getEnd(),
     );
-    var fmxClass = this.getFamiClass(classDeclaration.getName(), fmxFileAnchor, false);
+    const fmxClass = this.getFamiClass(classDeclaration.getName(), fmxFileAnchor, false);
     if (fmxNameSpace != null) {
       fmxClass.setContainer(fmxNameSpace);
     }
@@ -29,20 +29,20 @@ export class mseClassHelper {
     sourceFileName: string,
     fmxNameSpace: Famix.Namespace = null,
   ) {
-    var fmxFileAnchor = mseFileAnchorHelper.createFileAnchor(
+    const fmxFileAnchor = MseFileAnchorHelper.createFileAnchor(
       this._repository,
       sourceFileName,
       interfaceDeclaration.getStart(),
       interfaceDeclaration.getEnd(),
     );
-    var fmxClass = this.getFamiClass(interfaceDeclaration.getName(), fmxFileAnchor, true);
+    const fmxClass = this.getFamiClass(interfaceDeclaration.getName(), fmxFileAnchor, true);
     if (fmxNameSpace != null) {
       fmxClass.setContainer(fmxNameSpace);
     }
   }
 
   private getFamiClass(name: string, fmxFileAnchor: Famix.IndexedFileAnchor, isInterface: boolean): Famix.Class {
-    var fmxClass = new Famix.Class(this._repository);
+    const fmxClass = new Famix.Class(this._repository);
     this.updateInfo(fmxClass, name, fmxFileAnchor, isInterface);
     this._repository.addElement(fmxClass);
     return fmxClass;

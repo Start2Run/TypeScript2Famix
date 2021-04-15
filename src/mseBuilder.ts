@@ -9,13 +9,13 @@ import {
 } from 'ts-morph';
 import * as Famix from './lib/model/famix';
 
-import { mseClassHelper } from './mseClassHelper';
-import { mseMethodHelper } from './mseMethodHelper';
-import { msePropertyHelper } from './msePropertyHelper';
+import { MseClassHelper } from './mseClassHelper';
+import { MseMethodHelper } from './mseMethodHelper';
+import { MsePropertyHelper } from './msePropertyHelper';
 import { Globals } from './Globals';
-import { mseFileAnchorHelper } from './mseFileAnchorHelper';
+import { MseFileAnchorHelper } from './mseFileAnchorHelper';
 
-export class mseBuilder {
+export class MseBuilder {
   private _repository: FamixRepository;
   private _namespaces = new Map<string, Famix.Namespace>();
   private _classes: ClassDeclaration[] = [];
@@ -23,9 +23,9 @@ export class mseBuilder {
   private _fmxGlobalNamespace: Famix.Namespace;
   private _fmxGlobalClass: Famix.Class;
 
-  private _fmxClassHelper: mseClassHelper;
-  private _fmxMethodHelper: mseMethodHelper;
-  private _fmxPropertyHelper: msePropertyHelper;
+  private _fmxClassHelper: MseClassHelper;
+  private _fmxMethodHelper: MseMethodHelper;
+  private _fmxPropertyHelper: MsePropertyHelper;
 
   constructor() {
     this._repository = new FamixRepository();
@@ -36,13 +36,13 @@ export class mseBuilder {
     this._fmxGlobalClass = new Famix.Class(this._repository);
     this._fmxGlobalClass.setName(Globals.GlobcalClass);
 
-    this._fmxClassHelper = new mseClassHelper(this._repository);
-    this._fmxMethodHelper = new mseMethodHelper(this._repository, this._fmxGlobalNamespace);
-    this._fmxPropertyHelper = new msePropertyHelper(this._repository, this._fmxGlobalNamespace);
+    this._fmxClassHelper = new MseClassHelper(this._repository);
+    this._fmxMethodHelper = new MseMethodHelper(this._repository, this._fmxGlobalNamespace);
+    this._fmxPropertyHelper = new MsePropertyHelper(this._repository, this._fmxGlobalNamespace);
   }
 
   public loadNamespace(namespaceDeclaration: NamespaceDeclaration): Famix.Namespace {
-    var name = namespaceDeclaration.getName();
+    const name = namespaceDeclaration.getName();
     let fmxNamespace: Famix.Namespace;
     if (this._namespaces.has(name)) {
       fmxNamespace = this._namespaces.get(name);
@@ -55,7 +55,7 @@ export class mseBuilder {
   }
 
   public addClass(classDeclaration: ClassDeclaration, sourceFileName: string, fmxNameSpace: Famix.Namespace = null) {
-    var name = classDeclaration.getName();
+    const name = classDeclaration.getName();
     this._fmxClassHelper.loadClass(classDeclaration, sourceFileName, fmxNameSpace);
     this._classes.push(classDeclaration);
     if (fmxNameSpace == null) {
@@ -70,7 +70,7 @@ export class mseBuilder {
     sourceFileName: string,
     fmxNameSpace: Famix.Namespace = null,
   ) {
-    var name = interfaceDeclaration.getName();
+    const name = interfaceDeclaration.getName();
     this._fmxClassHelper.loadInterface(interfaceDeclaration, sourceFileName, fmxNameSpace);
     this._interfaces.push(interfaceDeclaration);
     if (fmxNameSpace == null) {
@@ -81,7 +81,7 @@ export class mseBuilder {
   }
 
   public addMethods(name: string, classDeclaration: any) {
-    var fmxClass = this.getFamixClass(name);
+    const fmxClass = this.getFamixClass(name);
     if (!fmxClass.getIsInterface()) {
       this._fmxMethodHelper.addConstructors(classDeclaration.getConstructors(), fmxClass);
     }
@@ -89,9 +89,9 @@ export class mseBuilder {
   }
 
   public addMethodReferences(method: MethodDeclaration, className: string) {
-    if (method.findReferences != undefined) {
-      var fmxClass = this.getFamixClass(className);
-      var fmxMethod = this.getFamixMethod(method.getName(), fmxClass);
+    if (method.findReferences !== undefined) {
+      const fmxClass = this.getFamixClass(className);
+      const fmxMethod = this.getFamixMethod(method.getName(), fmxClass);
       if (fmxMethod != null) {
         this._fmxMethodHelper.addReferences(method, fmxMethod, fmxClass);
       }
@@ -99,29 +99,29 @@ export class mseBuilder {
   }
 
   public addProperties(name: string, classDeclaration: any) {
-    var fmxClass = this.getFamixClass(name);
+    const fmxClass = this.getFamixClass(name);
     this._fmxPropertyHelper.addProperties(classDeclaration.getProperties(), fmxClass);
   }
 
   public addInterfaceImplementations(name: string, implementations: any[]) {
     implementations.forEach((implementation) => {
-      var fmxSuperClass = this.getFamixClass(name);
-      var fmxSubclass = this.getFamixClass(implementation.getNode().getText());
+      const fmxSuperClass = this.getFamixClass(name);
+      const fmxSubclass = this.getFamixClass(implementation.getNode().getText());
       if (fmxSubclass == null || fmxSuperClass == null) {
-        console.log('Error in addInterfaceImplementations: ' + name + '-' + implementation.getNode().getText());
+        // console.log('Error in addInterfaceImplementations: ' + name + '-' + implementation.getNode().getText());
         return;
       }
-      var fmxInheritance = new Famix.Inheritance(this._repository);
+      const fmxInheritance = new Famix.Inheritance(this._repository);
       fmxInheritance.setSubclass(fmxSubclass);
       fmxInheritance.setSuperclass(fmxSuperClass);
     });
   }
 
   public addDerivedClasses(name: string, derivedClasses: ClassDeclaration[]) {
-    var fmxClass = this.getFamixClass(name);
+    const fmxClass = this.getFamixClass(name);
     derivedClasses.forEach((derivedClass) => {
-      var fmxInheritance = new Famix.Inheritance(this._repository);
-      var subclass = this.getFamixClass(derivedClass.getName());
+      const fmxInheritance = new Famix.Inheritance(this._repository);
+      const subclass = this.getFamixClass(derivedClass.getName());
       fmxInheritance.setSubclass(subclass);
       fmxInheritance.setSuperclass(fmxClass);
     });
@@ -129,9 +129,9 @@ export class mseBuilder {
 
   public addFunctions(functions: FunctionDeclaration[], fileName: string) {
     functions.forEach((func) => {
-      var fmxFunction = new Famix.Function(this._repository);
+      const fmxFunction = new Famix.Function(this._repository);
       fmxFunction.setName(func.getName());
-      var fmxFileSourceAnchor = mseFileAnchorHelper.createFileAnchor(
+      const fmxFileSourceAnchor = MseFileAnchorHelper.createFileAnchor(
         this._repository,
         fileName,
         func.getStart(),
@@ -144,9 +144,9 @@ export class mseBuilder {
 
   public addVariables(variables: VariableDeclaration[], fileName: string) {
     variables.forEach((variable) => {
-      var fmxVariable = new Famix.GlobalVariable(this._repository);
+      const fmxVariable = new Famix.GlobalVariable(this._repository);
       fmxVariable.setName(variable.getName());
-      var fmxFileSourceAnchor = mseFileAnchorHelper.createFileAnchor(
+      const fmxFileSourceAnchor = MseFileAnchorHelper.createFileAnchor(
         this._repository,
         fileName,
         variable.getStart(),
@@ -171,7 +171,7 @@ export class mseBuilder {
   private getFamixMethod(methodName: string, fmxClass: Famix.Class): Famix.Method {
     let fmxMethod: Famix.Method;
     fmxClass.getMethods().forEach((m) => {
-      if (m.getName() == methodName) {
+      if (m.getName() === methodName) {
         fmxMethod = m;
         return;
       }

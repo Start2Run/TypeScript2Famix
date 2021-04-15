@@ -1,9 +1,11 @@
 // This code was copied and otained from : /https://github.com/anandundavia/ts-complex
 // Using the code directly because for some reason the npm package didn't work properly
 
-const { forEachChild, SyntaxKind, createSourceFile } = require('typescript');
-const { isFunctionWithBody } = require('tsutils');
-const { existsSync, readFileSync } = require('fs');
+import { forEachChild, SyntaxKind, createSourceFile } from 'typescript';
+import { isFunctionWithBody } from 'tsutils';
+import { existsSync, readFileSync } from 'fs';
+
+/* tslint:disable-next-line */
 const { isIdentifier } = require('typescript');
 
 const getNodeName = (node) => {
@@ -50,7 +52,7 @@ const calculateFromSource = (ctx) => {
       const old = complexity;
       complexity = 1;
       forEachChild(node, cb);
-      var name = getNodeName(node)?.toString();
+      const name = getNodeName(node)?.toString();
       output[name] = complexity;
       complexity = old;
     } else {

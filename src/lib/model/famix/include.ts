@@ -4,25 +4,25 @@ import { FamixMseExporter } from '../../famix_mse_exporter';
 import { Association } from './association';
 
 export class Include extends Association {
-  private includeSource: Object;
+  private includeSource: object;
 
   // @FameProperty(name = "source")
-  public getSource(): Object {
+  public getSource(): object {
     return this.includeSource;
   }
 
-  public setSource(includeSource: Object) {
+  public setSource(includeSource: object) {
     this.includeSource = includeSource;
   }
 
-  private includeTarget: Object;
+  private includeTarget: object;
 
   // @FameProperty(name = "target")
-  public getTarget(): Object {
+  public getTarget(): object {
     return this.includeTarget;
   }
 
-  public setTarget(includeTarget: Object) {
+  public setTarget(includeTarget: object) {
     this.includeTarget = includeTarget;
   }
 

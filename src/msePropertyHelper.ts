@@ -2,7 +2,7 @@ import { FamixRepository } from './lib/famix_repository';
 import { PropertyDeclaration, AccessorDeclaration } from 'ts-morph';
 import * as Famix from './lib/model/famix';
 
-export class msePropertyHelper {
+export class MsePropertyHelper {
   private _repository: FamixRepository;
   private _fmxGlobalNamespace: Famix.Namespace;
 
@@ -13,33 +13,22 @@ export class msePropertyHelper {
 
   public addProperties = function (properties: PropertyDeclaration[], fmxClass: Famix.Class) {
     properties.forEach((prop) => {
-      var fmxAttribute = new Famix.Attribute(this._repository);
+      const fmxAttribute = new Famix.Attribute(this._repository);
       fmxAttribute.setName(prop.getName());
       fmxAttribute.setParentType(fmxClass);
       try {
         fmxAttribute.addModifiers(prop.getScope());
       } catch (Error) {
-        console.log(Error.message);
+        // console.log(Error.message);
         return;
       }
-      var fmxType = this.getFamixType(prop.getType().getText());
+      const fmxType = this.getFamixType(prop.getType().getText());
       fmxAttribute.setDeclaredType(fmxType);
     });
   };
 
-  public addSetAccessors = function (accessors: AccessorDeclaration[], fmxClass: Famix.Class) {
-    accessors.forEach((accessor) => {
-      //var fmxAccessor = new Famix.Access(this._repository);
-      // fmxAccessor.setAccessor(prop.getName());
-      // fmxAccessor.setParentType(fmxClass);
-      // fmxAccessor.addModifiers(prop.getScope());
-      // var fmxType = this.getFamixType(prop.getType().getText())
-      // fmxAccessor.setDeclaredType(fmxType)
-    });
-  };
-
-  private getFamixType(name: string): Famix.Type {
-    var fmxClass = this._repository.getFamixClass(name);
+   private getFamixType(name: string): Famix.Type {
+    let fmxClass = this._repository.getFamixClass(name);
     if (fmxClass != null) {
       return fmxClass;
     }
